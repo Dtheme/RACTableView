@@ -1,0 +1,40 @@
+//
+//  Dzwheader.pch
+//  RACTable
+//
+//  Created by Mac on 2021/7/12.
+//
+
+#ifndef Dzwheader_pch
+#define Dzwheader_pch
+
+#import <ReactiveObjC/ReactiveObjC.h>
+#import <Masonry/Masonry.h>
+#import "RACTableView.h"
+#import "DzwTool.h"
+#import "CategoryHeader.h"
+#import <YYKit/YYKit.h>
+
+#pragma mark - global define
+
+//布局
+#define kScale_W(w) (((SCREEN_HEIGHT>SCREEN_WIDTH)?SCREEN_WIDTH:SCREEN_HEIGHT)/375.0f) * (w)
+#define kScale_H(h) (SCREEN_HEIGHT/667.0f) * (h)
+
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+
+//字体
+#define kRegFont @"PingFangSC-Regular"
+#define kMedFont @"PingFangSC-Medium"
+#define kFontWithName(NAME, FONTSIZE)    [UIFont fontWithName:(NAME) size:(FONTSIZE)]
+#define kGetImageNamed(imageName) [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName]]
+
+//颜色
+#define HexColor(Str) [UIColor hex:Str]
+
+//extra
+#define kISNullString(str) (([str isKindOfClass:[NSNull class]]|| [str isEqualToString:@"(null)"] || str == nil || [str length] < 1) ? YES : NO )
+#define kISNullArray(array) (array == nil || [array isKindOfClass:[NSNull class]] || array.count == 0 ||[array isEqual:[NSNull null]])
+
+#endif /* Dzwheader_pch */
