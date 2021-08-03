@@ -1,5 +1,5 @@
 # RACTableView
-当前是demo工程。未支持cocoapod
+当前是demo工程，通用性的tableview的封装方案尝试。未支持cocoapod
 
 
 ### 解决什么问题？
