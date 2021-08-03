@@ -29,13 +29,36 @@
 - (ZGRacTableView *)tableView{
     if(!_tableView){
         _tableView = [[ZGRacTableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        //ZGRacTableViewDelegate代理
         _tableView.rac_delegate = self;
     }
     return _tableView;
 }
 ```
 
-一般情况下不需要实现UITableViewDelegate和DataSource
+
+
+a. 如果需要获取cell或者header、footer的实例 提供了`ZGRacTableViewDelegate` 可以获取对应indexpath的实例和相关联的数据源，参考上面`_tableView.rac_delegate = self;`
+
+```objective-c
+@protocol ZGRacTableViewDelegate <NSObject>
+@optional;
+/**
+ 在需要的时候获取指定index的cell、header、footer实例
+ 例如：cell内有按钮 需要传递事件到外层使用
+      可以实现这个代理获取cell实例传递点击事件到vc或vm、
+ */
+- (void)rac_ableView:(UITableView *)tableView cell:(UITableViewCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)rac_ableView:(UITableView *)tableView headerView:(UIView *)headerView viewForHeaderInSection:(NSInteger)section;
+- (void)rac_ableView:(UITableView *)tableView footerView:(UIView *)footerView viewForFooterInSection:(NSInteger)section;
+@end
+```
+
+b. 一般情况下不需要实现Delegate和DataSource,如果当前的封装无法满足你的需求，可以将`RACTableView`作为一般的`UITableView`使用。像一般的用法一样将当前vc作为代理实现tableview相关代理`UITableViewDelegate` 或 数据源协议`UITableViewDataSource`就可以了,会优先以VC中实现的代理为准。
+
+
+
+
 
 如果当前的封装无法满足需求的时候，RACTableView可以原封不动的当做UITableView使用。
 
