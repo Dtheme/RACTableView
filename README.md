@@ -101,7 +101,8 @@ b. 一般情况下不需要实现Delegate和DataSource,如果当前的封装无�
 @property (nonatomic, strong) NSNumber *sectionFooterHeight;
 ```
 
-4.在第二步中的`DzwTestTabCell`，是你自定义的cell，它可以支持纯代码或者xib，在cell中绑定模型，监听模型变化就好。
+4.在第二步中的`DzwTestTabCell`，是你自定义的cell，它可以支持纯代码或者xib，在cell中绑定模型，监听模型变化就好。对应2中如果你的cell是xib类型：`cellMd2.cellNib = [DzwTestTabCell class];` 纯代码cell：`cellMd2.cellClass = [DzwTestTabCell class];`，cellClass和cellNib只有一个会生效。
+❗️如果2个都实现了，cellNib会覆盖cellClass。
 
 ```objective-c
 - (void)bindingCellData{
