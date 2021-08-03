@@ -3,7 +3,7 @@
 //  RACTable
 //
 //  Created by dzw on 2021/1/1.
-//  Copyright © 2021 ZEGO. All rights reserved.
+//  Copyright © 2021 dzw. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
