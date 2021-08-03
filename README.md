@@ -58,7 +58,7 @@ b. 一般情况下不需要实现Delegate和DataSource,如果当前的封装无�
 
 
 
-2.vm中准备好数据源 在vc中监听刷新就好
+2.vm中准备好数据源 在vc中监听数据源和刷新列表就好
 
 ```objective-c
     self.models = [NSArray array];
