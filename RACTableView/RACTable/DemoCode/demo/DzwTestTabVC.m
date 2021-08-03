@@ -61,7 +61,7 @@
 
 #pragma mark - ZGRacTableViewDelegate
 //获取cell中回调出来的事件
-- (void)rac_ableView:(UITableView *)tableView cell:(UITableViewCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (void)rac_tableView:(UITableView *)tableView cell:(UITableViewCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell isKindOfClass:[DzwTestTabCell class]]) {
         DzwTestTabCell * testCell = (DzwTestTabCell *)cell;
         //cell上按钮的点击事件

@@ -69,8 +69,8 @@
     }else if(cellModel.cellNib){
         cell = [cellModel.cellNib cellForTableView:tableView cellModel:cellModel];
     }
-    if (_rac_delegate && [_rac_delegate respondsToSelector:@selector(rac_ableView:cell:cellForRowAtIndexPath:)]) {
-        [_rac_delegate rac_ableView:tableView cell:cell cellForRowAtIndexPath:indexPath];
+    if (_rac_delegate && [_rac_delegate respondsToSelector:@selector(rac_tableView:cell:cellForRowAtIndexPath:)]) {
+        [_rac_delegate rac_tableView:tableView cell:cell cellForRowAtIndexPath:indexPath];
     }
     return cell;
 }
@@ -99,8 +99,8 @@
     NSObject<ZGRacModelDelegate> *sectionMd = [self sectionHeaderViewModelInSection:section];
     UIView *header = [sectionMd.sectionHeaderClass tableView:tableView viewforSection:section sectionViewModel:sectionMd];
     if (header) {
-        if (_rac_delegate && [_rac_delegate respondsToSelector:@selector(rac_ableView:headerView:viewForHeaderInSection:)]) {
-            [_rac_delegate rac_ableView:tableView headerView:header viewForHeaderInSection:section];
+        if (_rac_delegate && [_rac_delegate respondsToSelector:@selector(rac_tableView:headerView:viewForHeaderInSection:)]) {
+            [_rac_delegate rac_tableView:tableView headerView:header viewForHeaderInSection:section];
         }
     }
     return header;
@@ -109,8 +109,8 @@
     NSObject<ZGRacModelDelegate> *sectionMd = [self sectionFooterViewModelInSection:section];
     UIView *footer = [sectionMd.sectionFooterClass tableView:tableView viewforSection:section sectionViewModel:sectionMd];
     if (footer) {
-        if (_rac_delegate && [_rac_delegate respondsToSelector:@selector(rac_ableView:headerView:viewForHeaderInSection:)]) {
-            [_rac_delegate rac_ableView:tableView headerView:footer viewForHeaderInSection:section];
+        if (_rac_delegate && [_rac_delegate respondsToSelector:@selector(rac_tableView:headerView:viewForHeaderInSection:)]) {
+            [_rac_delegate rac_tableView:tableView headerView:footer viewForHeaderInSection:section];
         }
     }
     return footer;

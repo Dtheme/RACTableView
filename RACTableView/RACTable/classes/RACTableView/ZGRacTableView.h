@@ -22,9 +22,9 @@ UIKIT_EXTERN NSExceptionName const ZGRacTableViewCellHeightCache_;
  例如：cell内有按钮 需要传递事件到外层使用
       可以实现这个代理获取cell实例传递点击事件到vc或vm、
  */
-- (void)rac_ableView:(UITableView *)tableView cell:(UITableViewCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (void)rac_ableView:(UITableView *)tableView headerView:(UIView *)headerView viewForHeaderInSection:(NSInteger)section;
-- (void)rac_ableView:(UITableView *)tableView footerView:(UIView *)footerView viewForFooterInSection:(NSInteger)section;
+- (void)rac_tableView:(UITableView *)tableView cell:(UITableViewCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)rac_tableView:(UITableView *)tableView headerView:(UIView *)headerView viewForHeaderInSection:(NSInteger)section;
+- (void)rac_tableView:(UITableView *)tableView footerView:(UIView *)footerView viewForFooterInSection:(NSInteger)section;
 @end
 
 @interface ZGRacTableView : UITableView <UITableViewDataSource, UITableViewDelegate>
