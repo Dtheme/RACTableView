@@ -24,7 +24,7 @@
         cellMd2.imageUrl = @"img_yj_ms";
         cellMd2.titleString = @"标题：row 2";
         cellMd2.detailString = [NSString stringWithFormat:@"详情：section %d",i];
-//        cellMd2.cellHeight = @(kScale_W(120));
+        cellMd2.cellHeight = @(kScale_W(120));
         cellMd2.cellNib = [DzwTestTabCell class];
         [t_modelsArr addObject:cellMd2];
         

@@ -7,7 +7,6 @@
 
 #import "ViewController.h"
 #import "DzwTestTabVC.h"
-#import "TestLoginVC.h"
 
 @interface ViewController ()
 
@@ -18,10 +17,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-}
-- (IBAction)pushDemo1:(UIButton *)sender {
-    TestLoginVC *vc = [TestLoginVC new];
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (IBAction)pushDemo2:(id)sender {
