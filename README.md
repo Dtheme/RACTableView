@@ -1,7 +1,6 @@
 # RACTableView
 当前是demo工程。未支持cocoapod
 
-demo工程中包含的内容：1.基于RAC的mvvm结构封装UITableView。2.基于YTKNetwork和RAC的网络请求基础类。3.demo代码
 
 ### 解决什么问题？
 1. 面对简单的列表，我们需要重复写tableView的delegate和DataSource的代码，试图减少节省这部分重复的工作。
