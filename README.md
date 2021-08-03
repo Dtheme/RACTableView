@@ -81,15 +81,13 @@ b. 一般情况下不需要实现Delegate和DataSource,如果当前的封装无�
     self.models = [NSArray arrayWithArray:modelsArr];
 ```
 
-
-
 3.model需要遵循`ZGRacModelDelegate`协议，才能使用它定义的cell相关的扩展属性，扩展属性的具体使用参考相关的.h注释 例如：
 
 ```objective-c
 @interface DzwTestTabModel : NSObject<ZGRacModelDelegate>
 
-...
-  
+... 
+  #协议中已定义的扩展属性
 @property (nonatomic, unsafe_unretained) Class<ZGRacTableViewCellDelegate> cellClass;
 @property (nonatomic, unsafe_unretained) Class<ZGRacTableViewCellDelegate> cellNib;
 @property (nonatomic, copy, nullable) NSString *cellReuseIdentifier;
@@ -102,6 +100,22 @@ b. 一般情况下不需要实现Delegate和DataSource,如果当前的封装无�
 @property (nonatomic, unsafe_unretained) Class<ZGRacSectionViewDelegate> sectionFooterClass;
 @property (nonatomic, strong) NSNumber *sectionFooterHeight;
 ```
+
+4.在第二步中的`DzwTestTabCell`，是你自定义的cell，它可以支持纯代码或者xib，在cell中绑定模型，监听模型变化就好。
+
+```objective-c
+- (void)bindingCellData{
+    @weakify(self);
+    [[RACObserve(self, cellModel) skip:1]subscribeNext:^(DzwTestTabModel * _Nullable model) {
+        @strongify(self);
+        self.imageV.image = kGetImageNamed(model.imageUrl);
+        self.titleLb.text = model.titleString;
+        self.detailLb.text = model.detailString;
+    }];
+}
+```
+
+这样一个完整的tableview就构建完成了。
 
 
 
