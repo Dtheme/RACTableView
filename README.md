@@ -83,11 +83,13 @@ b. 一般情况下不需要实现Delegate和DataSource,如果当前的封装无�
 
 
 
-3.model需要遵循`ZGRacModelDelegate`协议，才能使用它定义的cell相关的扩展属性，扩展属性的具体使用参考相关的.h注释
+3.model需要遵循`ZGRacModelDelegate`协议，才能使用它定义的cell相关的扩展属性，扩展属性的具体使用参考相关的.h注释 例如：
 
 ```objective-c
 @interface DzwTestTabModel : NSObject<ZGRacModelDelegate>
-  ```
+
+...
+  
 @property (nonatomic, unsafe_unretained) Class<ZGRacTableViewCellDelegate> cellClass;
 @property (nonatomic, unsafe_unretained) Class<ZGRacTableViewCellDelegate> cellNib;
 @property (nonatomic, copy, nullable) NSString *cellReuseIdentifier;
