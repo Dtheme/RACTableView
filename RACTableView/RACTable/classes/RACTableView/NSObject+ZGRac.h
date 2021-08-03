@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong) NSNumber *cellHeight;
 
-/** 缓存是否折叠
+/** 缓存cell是否折叠
  *  YES:cell折叠状态 cellHeight = 0 NO：cell展开状态 高度为cellHeight
  */
 @property (nonatomic, assign) BOOL isfold;
