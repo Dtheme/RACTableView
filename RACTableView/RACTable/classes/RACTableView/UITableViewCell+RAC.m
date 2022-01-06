@@ -1,40 +1,40 @@
 //
-//  UITableViewCell+ZGRac.m
+//  UITableViewCell+RAC.m
 //  RACTable
 //
 //  Created by dzw on 2021/1/1.
 //  Copyright © 2021 dzw. All rights reserved.
 //
 
-#import "UITableViewCell+ZGRac.h"
+#import "UITableViewCell+RAC.h"
 #import <objc/message.h>
 
-@implementation UITableViewCell (ZGRac)
+@implementation UITableViewCell (RAC)
 
 + (void)load {
     Method cell_style_original = class_getInstanceMethod(self.class, @selector(initWithStyle:reuseIdentifier:));
-    Method cell_style_swizzled = class_getInstanceMethod(self.class, @selector(zg_initWithStyle:reuseIdentifier:));
+    Method cell_style_swizzled = class_getInstanceMethod(self.class, @selector(d_initWithStyle:reuseIdentifier:));
     
     Method init_coder_original = class_getInstanceMethod(self.class, @selector(initWithCoder:));
-    Method init_coder_swizzled = class_getInstanceMethod(self.class, @selector(zg_initWithCoder:));
+    Method init_coder_swizzled = class_getInstanceMethod(self.class, @selector(d_initWithCoder:));
     method_exchangeImplementations(cell_style_original, cell_style_swizzled);
     method_exchangeImplementations(init_coder_original, init_coder_swizzled);
 }
 
-- (instancetype)zg_initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    UITableViewCell *cell = [self zg_initWithStyle:style reuseIdentifier:reuseIdentifier];
+- (instancetype)d_initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    UITableViewCell *cell = [self d_initWithStyle:style reuseIdentifier:reuseIdentifier];
     [cell bindingCellData];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
-- (instancetype)zg_initWithCoder:(NSCoder *)coder{
-    UITableViewCell *cell = [self zg_initWithCoder:coder];
+- (instancetype)d_initWithCoder:(NSCoder *)coder{
+    UITableViewCell *cell = [self d_initWithCoder:coder];
     [cell bindingCellData];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
-#pragma mark - ZGRacModelDelegate
+#pragma mark - RACModelDelegate
 + (void)registerCellWithTableView:(UITableView *)tableView identify:(NSString *)identify {
     [tableView registerClass:self forCellReuseIdentifier:identify];
 }
@@ -43,7 +43,7 @@
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass(self) bundle:nil] forCellReuseIdentifier:identify];
 }
 
-+ (instancetype)cellForTableView:(UITableView *)tableView cellModel:(id<ZGRacModelDelegate>)cellModel {
++ (instancetype)cellForTableView:(UITableView *)tableView cellModel:(id<RACModelDelegate>)cellModel {
     NSString *identify = NSStringFromClass(self.class);
     NSString *cellID = kISNullString(cellModel.cellReuseIdentifier)?identify:cellModel.cellReuseIdentifier;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
@@ -64,7 +64,7 @@
     return cell;
 }
 
-+ (CGFloat)cellHeightForCellModel:(id<ZGRacModelDelegate>)cellModel {
++ (CGFloat)cellHeightForCellModel:(id<RACModelDelegate>)cellModel {
     return 0;
 }
 
@@ -72,11 +72,11 @@
 }
 
 #pragma mark - Getter & Setter
-- (void)setCellModel:(id<ZGRacModelDelegate>)cellModel {
+- (void)setCellModel:(id<RACModelDelegate>)cellModel {
     objc_setAssociatedObject(self, @selector(cellModel), cellModel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (id<ZGRacModelDelegate>)cellModel {
+- (id<RACModelDelegate>)cellModel {
     return objc_getAssociatedObject(self, _cmd);
 }
 

@@ -1,5 +1,5 @@
 //
-//  NSObject+ZGRac.h
+//  NSObject+RAC.h
 //  RACTable
 //
 //  Created by dzw on 2021/1/4.
@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UITableViewCell+ZGRac.h"
-#import "UIView+ZGRac.h"
+#import "UITableViewCell+RAC.h"
+#import "UIView+RAC.h"
 NS_ASSUME_NONNULL_BEGIN
 
 
-@protocol ZGRacModelDelegate <NSObject>
+@protocol RACModelDelegate <NSObject>
 
 @optional
 
@@ -22,13 +22,13 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  eg:  md.cellClass = [DzwTestCell class];
  */
-@property (nonatomic, unsafe_unretained) Class<ZGRacTableViewCellDelegate> cellClass;
+@property (nonatomic, unsafe_unretained) Class<RACTableViewCellDelegate> cellClass;
 
 /**❗️cellClass和cellNib只可能有一个生效 要么纯代码布局的cell要么xib的cell
  * cellNib是注册带xib的cell
  * eg:  md.cellNib = [DzwTestCell class]
  */
-@property (nonatomic, unsafe_unretained) Class<ZGRacTableViewCellDelegate> cellNib;
+@property (nonatomic, unsafe_unretained) Class<RACTableViewCellDelegate> cellNib;
 
 /**
  * cell重用标志 可以为nil 默认使用cell类名字符串作为重用标志
@@ -46,15 +46,15 @@ NS_ASSUME_NONNULL_BEGIN
  *  YES:cell折叠状态 cellHeight = 0 NO：cell展开状态 高度为cellHeight
  */
 @property (nonatomic, assign) BOOL isfold;
-@property (nonatomic, unsafe_unretained) Class<ZGRacSectionViewDelegate> sectionHeaderClass;
+@property (nonatomic, unsafe_unretained) Class<RACSectionViewDelegate> sectionHeaderClass;
 @property (nonatomic, strong) NSNumber *sectionHeaderHeight;
 
-@property (nonatomic, unsafe_unretained) Class<ZGRacSectionViewDelegate> sectionFooterClass;
+@property (nonatomic, unsafe_unretained) Class<RACSectionViewDelegate> sectionFooterClass;
 @property (nonatomic, strong) NSNumber *sectionFooterHeight;
 
 @end
 
-@interface NSObject (ZGRac)
+@interface NSObject (RAC)
 
 /// 数据添加数据 因为addobject直接添加 rac会无法触发数组数据变化监听
 /// @param arrProperty vm中定义的 数组属性的名字 arrProperty使用SEL是为了防止写入@”models“ 没有提示和拼写问题

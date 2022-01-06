@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DzwTestTabModel : NSObject<ZGRacModelDelegate>
+@interface DzwTestTabModel : NSObject<RACModelDelegate>
 @property (nonatomic, copy) NSString *imageUrl;
 @property (nonatomic, copy) NSString *titleString;
 @property (nonatomic, copy) NSString *detailString;

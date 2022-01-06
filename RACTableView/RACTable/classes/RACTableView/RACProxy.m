@@ -1,14 +1,14 @@
 //
-//  ZGRacProxy.m
+//  RACProxy.m
 //  RACTable
 //
 //  Created by dzw on 2021/1/1.
 //  Copyright © 2021 dzw. All rights reserved.
 //
 
-#import "ZGRacProxy.h"
+#import "RACProxy.h"
 
-@implementation ZGRacProxy
+@implementation RACProxy
 
 - (id)forwardingTargetForSelector:(SEL)aSelector {
     if ([self.middleman respondsToSelector:aSelector]) return self.middleman;

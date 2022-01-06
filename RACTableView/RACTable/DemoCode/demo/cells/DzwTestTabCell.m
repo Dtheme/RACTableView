@@ -17,7 +17,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 }
-+ (CGFloat)cellHeightForCellModel:(id<ZGRacModelDelegate>)cellModel{
++ (CGFloat)cellHeightForCellModel:(id<RACModelDelegate>)cellModel{
     return [cellModel.cellHeight floatValue];
 }
 - (void)bindingCellData{

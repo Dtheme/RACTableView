@@ -1,5 +1,5 @@
 //
-//  UIView+ZGRac.h
+//  UIView+RAC.h
 //  RACTable
 //
 //  Created by dzw on 2021/1/5.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ZGRacModelDelegate;
-@protocol ZGRacSectionViewDelegate <NSObject>
+@protocol RACModelDelegate;
+@protocol RACSectionViewDelegate <NSObject>
 
 /**
  计算 Cell 高度，默认为 0，会被 sectionViewModel 缓存
@@ -18,7 +18,7 @@
  @param sectionViewModel sectionViewModel
  @return sectionViewHeight
  */
-+ (CGFloat)heightForSectionViewModel:(id<ZGRacModelDelegate>)sectionViewModel;
++ (CGFloat)heightForSectionViewModel:(id<RACModelDelegate>)sectionViewModel;
 
 /**
  sectionView 创建完成回调
@@ -35,12 +35,12 @@
  @param sectionViewModel sectionViewModel
  @return cell
  */
-+ (instancetype)tableView:(UITableView *)tableView viewforSection:(NSInteger)section sectionViewModel:(id<ZGRacModelDelegate>)sectionViewModel;
++ (instancetype)tableView:(UITableView *)tableView viewforSection:(NSInteger)section sectionViewModel:(id<RACModelDelegate>)sectionViewModel;
 
 @end
 
-@interface UIView (ZGRac)<ZGRacSectionViewDelegate>
-@property (nonatomic, strong) id<ZGRacModelDelegate> sectionViewModel;
+@interface UIView (RAC)<RACSectionViewDelegate>
+@property (nonatomic, strong) id<RACModelDelegate> sectionViewModel;
 @end
 
 

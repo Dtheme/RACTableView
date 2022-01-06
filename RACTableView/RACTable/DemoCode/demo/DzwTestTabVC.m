@@ -10,9 +10,9 @@
 #import "DzwTestTabVM.h"
 #import "YYFPSLabel.h"
 #import "UITableView+FDTemplateLayoutCellDebug.h"
-
-@interface DzwTestTabVC ()<ZGRacTableViewDelegate>
-@property (nonatomic, strong) ZGRacTableView *tableView;
+#import "UITableView+RACTableView.h"
+@interface DzwTestTabVC ()<RACTableViewDelegate>
+@property (nonatomic, strong) DRacTableView *tableView;
 @property (nonatomic, strong) DzwTestTabVM *viewModel;
 @end
 
@@ -59,7 +59,7 @@
     }];
 }
 
-#pragma mark - ZGRacTableViewDelegate
+#pragma mark - RACTableViewDelegate
 //获取cell中回调出来的事件
 - (void)rac_tableView:(UITableView *)tableView cell:(UITableViewCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([cell isKindOfClass:[DzwTestTabCell class]]) {
@@ -81,7 +81,8 @@
         testcell3.foldCommand = [[RACCommand alloc]initWithSignalBlock:^RACSignal * _Nonnull(id _Nullable input) {
             @strongify(self);
             NSLog(@"🌗🌗展开收起cell的 序列号是：%ld-%ld",(long)indexPath.section,(long)indexPath.row);
-            [self.tableView zg_reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView d_reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationFade];
+//            [self.tableView ];
             return [RACSignal empty];
         }];
     }else if ([cell isKindOfClass:[DzwTestTabCell_4 class]]){
@@ -96,9 +97,9 @@
 }
 
 #pragma mark - getter & setter
-- (ZGRacTableView *)tableView{
+- (DRacTableView *)tableView{
     if(!_tableView){
-        _tableView = [[ZGRacTableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _tableView = [[DRacTableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.rac_delegate = self;
     }
     return _tableView;

@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DzwTestTabModel2 : NSObject<ZGRacModelDelegate>
+@interface DzwTestTabModel2 : NSObject<RACModelDelegate>
 
 @property (nonatomic, copy) NSString *titleString;
 //cell内嵌tableview的cell上显示的文字

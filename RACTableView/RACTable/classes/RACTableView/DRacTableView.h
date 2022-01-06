@@ -1,5 +1,5 @@
 //
-//  ZGRacTableView.h
+//  DRacTableView.h
 //  RACTable
 //
 //  Created by dzw on 2021/1/1.
@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <ReactiveObjC/ReactiveObjC.h>
-#import "NSObject+ZGRac.h"
-#import "UITableViewCell+ZGRac.h"
+#import "NSObject+RAC.h"
+#import "UITableViewCell+RAC.h"
 
 /** cell缓存模式定义
     todo：未完成
  */
-UIKIT_EXTERN NSExceptionName const ZGRacTableViewCellHeightCache_;
-@protocol ZGRacTableViewDelegate <NSObject>
+UIKIT_EXTERN NSExceptionName const RACTableViewCellHeightCache_;
+@protocol RACTableViewDelegate <NSObject>
 @optional;
 /**
  在需要的时候获取指定index的cell、header、footer实例
@@ -27,7 +27,7 @@ UIKIT_EXTERN NSExceptionName const ZGRacTableViewCellHeightCache_;
 - (void)rac_tableView:(UITableView *)tableView footerView:(UIView *)footerView viewForFooterInSection:(NSInteger)section;
 @end
 
-@interface ZGRacTableView : UITableView <UITableViewDataSource, UITableViewDelegate>
+@interface DRacTableView : UITableView <UITableViewDataSource, UITableViewDelegate>
 /** tableview数据源
  1.如果只要一个section vm数据直接放到数据源里
     eg：models = @[@"cellModel1",@"cellModel2",@"cellModel3"];
@@ -52,7 +52,7 @@ UIKIT_EXTERN NSExceptionName const ZGRacTableViewCellHeightCache_;
  */
 @property (nonatomic, strong) RACCommand *didSelectCommand;
 
-/**ZGRacTableViewDelegate代理*/
-@property (nonatomic, weak) id <ZGRacTableViewDelegate> rac_delegate;
+/**RACTableViewDelegate代理*/
+@property (nonatomic, weak) id <RACTableViewDelegate> rac_delegate;
 
 @end

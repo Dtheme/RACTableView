@@ -22,7 +22,7 @@
     // Configure the view for the selected state
 }
 
-+ (CGFloat)cellHeightForCellModel:(id<ZGRacModelDelegate>)cellModel{
++ (CGFloat)cellHeightForCellModel:(id<RACModelDelegate>)cellModel{
     return [cellModel.cellHeight floatValue];
 }
 

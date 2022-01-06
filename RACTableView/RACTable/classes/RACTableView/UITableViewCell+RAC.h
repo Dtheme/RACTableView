@@ -1,5 +1,5 @@
 //
-//  UITableViewCell+ZGRac.h
+//  UITableViewCell+RAC.h
 //  RACTable
 //
 //  Created by dzw on 2021/1/1.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ZGRacModelDelegate;
-@protocol ZGRacTableViewCellDelegate <NSObject>
+@protocol RACModelDelegate;
+@protocol RACTableViewCellDelegate <NSObject>
 
 /**
  计算 Cell 高度，默认为 0，会被 CellModel 缓存
@@ -18,7 +18,7 @@
  @param cellModel cellModel
  @return cellHeight
  */
-+ (CGFloat)cellHeightForCellModel:(id<ZGRacModelDelegate>)cellModel;
++ (CGFloat)cellHeightForCellModel:(id<RACModelDelegate>)cellModel;
 
 /**
  cell 创建完成会回调这个方法
@@ -46,12 +46,12 @@
  @param cellModel cellModel
  @return cell
  */
-+ (instancetype)cellForTableView:(UITableView *)tableView cellModel:(id<ZGRacModelDelegate>)cellModel;
++ (instancetype)cellForTableView:(UITableView *)tableView cellModel:(id<RACModelDelegate>)cellModel;
 
 
 @end
 
-@interface UITableViewCell (ZGRacCell) <ZGRacTableViewCellDelegate>
+@interface UITableViewCell (RACCell) <RACTableViewCellDelegate>
 
-@property (nonatomic, strong) id<ZGRacModelDelegate> cellModel;
+@property (nonatomic, strong) id<RACModelDelegate> cellModel;
 @end

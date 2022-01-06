@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ZGRacProxy : NSObject
+@interface RACProxy : NSObject
 
 @property (nonatomic, weak) id middleman;
 @property (nonatomic, weak) id receiver;

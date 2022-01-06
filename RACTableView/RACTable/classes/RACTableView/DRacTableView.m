@@ -1,21 +1,21 @@
 //
-//  ZGRacTableView.m
+//  DRacTableView.m
 //  RACTable
 //
 //  Created by dzw on 2021/1/1.
 //  Copyright © 2021 dzw. All rights reserved.
 //
 
-#import "ZGRacTableView.h"
-#import "ZGRacProxy.h"
+#import "DRacTableView.h"
+#import "RACProxy.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 
-@interface ZGRacTableView ()
-@property (nonatomic, strong) ZGRacProxy *delegateProxy;
-@property (nonatomic, strong) ZGRacProxy *dataSourceProxy;
+@interface DRacTableView ()
+@property (nonatomic, strong) RACProxy *delegateProxy;
+@property (nonatomic, strong) RACProxy *dataSourceProxy;
 @end
 
-@implementation ZGRacTableView
+@implementation DRacTableView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -62,7 +62,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSObject<ZGRacModelDelegate> *cellModel = [self cellModelAtIndexPath:indexPath];
+    NSObject<RACModelDelegate> *cellModel = [self cellModelAtIndexPath:indexPath];
     UITableViewCell *cell;
     if (cellModel.cellClass) {
         cell = [cellModel.cellClass cellForTableView:tableView cellModel:cellModel];
@@ -77,7 +77,7 @@
 
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSObject<ZGRacModelDelegate> *cellModel = [self cellModelAtIndexPath:indexPath];
+    NSObject<RACModelDelegate> *cellModel = [self cellModelAtIndexPath:indexPath];
     if (cellModel.cellHeight.doubleValue == 0) {
         CGFloat cellH = [tableView fd_heightForCellWithIdentifier:cellModel.cellReuseIdentifier cacheByIndexPath:indexPath configuration:^(UITableViewCell *cell) {
             
@@ -92,11 +92,11 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSObject<ZGRacModelDelegate> *cellModel = [self cellModelAtIndexPath:indexPath];
+    NSObject<RACModelDelegate> *cellModel = [self cellModelAtIndexPath:indexPath];
     [self.didSelectCommand execute:RACTuplePack(tableView, indexPath, cellModel)];
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSObject<ZGRacModelDelegate> *sectionMd = [self sectionHeaderViewModelInSection:section];
+    NSObject<RACModelDelegate> *sectionMd = [self sectionHeaderViewModelInSection:section];
     UIView *header = [sectionMd.sectionHeaderClass tableView:tableView viewforSection:section sectionViewModel:sectionMd];
     if (header) {
         if (_rac_delegate && [_rac_delegate respondsToSelector:@selector(rac_tableView:headerView:viewForHeaderInSection:)]) {
@@ -106,7 +106,7 @@
     return header;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-    NSObject<ZGRacModelDelegate> *sectionMd = [self sectionFooterViewModelInSection:section];
+    NSObject<RACModelDelegate> *sectionMd = [self sectionFooterViewModelInSection:section];
     UIView *footer = [sectionMd.sectionFooterClass tableView:tableView viewforSection:section sectionViewModel:sectionMd];
     if (footer) {
         if (_rac_delegate && [_rac_delegate respondsToSelector:@selector(rac_tableView:headerView:viewForHeaderInSection:)]) {
@@ -117,15 +117,15 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    NSObject<ZGRacModelDelegate> *cellModel = [self sectionHeaderViewModelInSection:section];
+    NSObject<RACModelDelegate> *cellModel = [self sectionHeaderViewModelInSection:section];
     return [cellModel.sectionHeaderHeight doubleValue];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    NSObject<ZGRacModelDelegate> *cellModel = [self sectionFooterViewModelInSection:section];
+    NSObject<RACModelDelegate> *cellModel = [self sectionFooterViewModelInSection:section];
     return [cellModel.sectionFooterHeight floatValue];
 }
 #pragma mark - Private
-- (NSObject<ZGRacModelDelegate> *)cellModelAtIndexPath:(NSIndexPath *)indexPath {
+- (NSObject<RACModelDelegate> *)cellModelAtIndexPath:(NSIndexPath *)indexPath {
     id obj = self.models[indexPath.section];
     if ([obj isKindOfClass:[NSArray class]]) {
         return [obj objectAtIndex:indexPath.row];
@@ -133,7 +133,7 @@
         return obj;
     }
 }
--(NSObject<ZGRacModelDelegate> *)sectionHeaderViewModelInSection:(NSInteger)section{
+-(NSObject<RACModelDelegate> *)sectionHeaderViewModelInSection:(NSInteger)section{
     if (section<self.sectionHeaderModels.count) {
         id obj = self.sectionHeaderModels[section];
         return obj;
@@ -141,7 +141,7 @@
         return nil;
     }
 }
--(NSObject<ZGRacModelDelegate> *)sectionFooterViewModelInSection:(NSInteger)section{
+-(NSObject<RACModelDelegate> *)sectionFooterViewModelInSection:(NSInteger)section{
     if (section<self.sectionFooterModels.count) {
         id obj = self.sectionFooterModels[section];
         return obj;
@@ -160,17 +160,17 @@
     [super setDataSource:(id<UITableViewDataSource>)self.dataSourceProxy];
 }
 
-- (ZGRacProxy *)delegateProxy {
+- (RACProxy *)delegateProxy {
     if (!_delegateProxy) {
-        _delegateProxy = [[ZGRacProxy alloc] init];
+        _delegateProxy = [[RACProxy alloc] init];
         _delegateProxy.receiver = self;
     }
     return _delegateProxy;
 }
 
-- (ZGRacProxy *)dataSourceProxy {
+- (RACProxy *)dataSourceProxy {
     if (!_dataSourceProxy) {
-        _dataSourceProxy = [[ZGRacProxy alloc] init];
+        _dataSourceProxy = [[RACProxy alloc] init];
         _dataSourceProxy.receiver = self;
     }
     return _dataSourceProxy;

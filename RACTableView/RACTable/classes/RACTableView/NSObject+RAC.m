@@ -1,14 +1,14 @@
 //
-//  NSObject+ZGRac.m
+//  NSObject+RAC.m
 //  RACTable
 //
 //  Created by dzw on 2021/2/4.
 //  Copyright © 2021 dzw. All rights reserved.
 //
 
-#import "NSObject+ZGRac.h"
+#import "NSObject+RAC.h"
 #import <objc/message.h>
-@implementation NSObject (ZGRac)
+@implementation NSObject (RAC)
 
 - (void)setCellNib:(Class)cellNib {
     objc_setAssociatedObject(self, @selector(cellNib), NSStringFromClass(cellNib), OBJC_ASSOCIATION_COPY_NONATOMIC);
@@ -16,7 +16,7 @@
     cellReuseIdentifier = kISNullString(cellReuseIdentifier)?NSStringFromClass(cellNib):cellReuseIdentifier;
 #warning 测试代码
 #ifdef DEBUG
-    NSLog(@"NSObject (ZGRac)[cellNib]  identifier---：%@",cellReuseIdentifier);
+    NSLog(@"NSObject (RAC)[cellNib]  identifier---：%@",cellReuseIdentifier);
 #endif
     [self setCellReuseIdentifier:cellReuseIdentifier];
 }
@@ -32,7 +32,7 @@
     cellReuseIdentifier = kISNullString(cellReuseIdentifier)?NSStringFromClass(cellClass):cellReuseIdentifier;
 #warning 测试代码
 #ifdef DEBUG
-    NSLog(@"NSObject (ZGRac)[cellClass]  identifier---：%@",cellReuseIdentifier);
+    NSLog(@"NSObject (RAC)[cellClass]  identifier---：%@",cellReuseIdentifier);
 #endif
     [self setCellReuseIdentifier:cellReuseIdentifier];
 }
@@ -48,7 +48,7 @@
 - (NSNumber *)cellHeight {
     NSNumber *cellHeight = objc_getAssociatedObject(self, _cmd);
     if (!cellHeight) {
-        cellHeight = @([self.cellClass cellHeightForCellModel:(id<ZGRacModelDelegate>)self]);
+        cellHeight = @([self.cellClass cellHeightForCellModel:(id<RACModelDelegate>)self]);
         self.cellHeight = cellHeight;
     }
     return cellHeight;
@@ -77,7 +77,7 @@
 - (NSNumber *)sectionHeaderHeight {
     NSNumber *cellHeight = objc_getAssociatedObject(self, _cmd);
     if (!cellHeight) {
-        cellHeight = @([self.cellClass cellHeightForCellModel:(id<ZGRacModelDelegate>)self]);
+        cellHeight = @([self.cellClass cellHeightForCellModel:(id<RACModelDelegate>)self]);
         self.cellHeight = cellHeight;
     }
     return cellHeight;
@@ -99,7 +99,7 @@
 - (NSNumber *)sectionFooterHeight {
     NSNumber *cellHeight = objc_getAssociatedObject(self, _cmd);
     if (!cellHeight) {
-        cellHeight = @([self.cellClass cellHeightForCellModel:(id<ZGRacModelDelegate>)self]);
+        cellHeight = @([self.cellClass cellHeightForCellModel:(id<RACModelDelegate>)self]);
         self.cellHeight = cellHeight;
     }
     return cellHeight;

@@ -43,7 +43,7 @@
         self.topLB.text = model.titleString;
     }];
 }
-//+ (CGFloat)cellHeightForCellModel:(id<ZGRacModelDelegate>)cellModel{
+//+ (CGFloat)cellHeightForCellModel:(id<RACModelDelegate>)cellModel{
 //    return [cellModel.cellHeight floatValue];
 //}
 

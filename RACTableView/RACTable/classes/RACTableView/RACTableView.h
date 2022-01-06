@@ -8,10 +8,10 @@
 #ifndef RACTableView_h
 #define RACTableView_h
 
-#import "ZGRacTableView.h"
-#import "UIView+ZGRac.h"
-#import "UITableViewCell+ZGRac.h"
-#import "UIView+ZGRac.h"
-#import "UITableView+ZGRacTableView.h"
+#import "DRacTableView.h"
+#import "UIView+RAC.h"
+#import "UITableViewCell+RAC.h"
+#import "UIView+RAC.h"
+#import "UITableView+RACTableView.h"
 
 #endif /* RACTableView_h */

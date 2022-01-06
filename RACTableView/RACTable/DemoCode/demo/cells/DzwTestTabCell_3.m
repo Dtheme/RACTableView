@@ -13,7 +13,7 @@
 
 @interface DzwTestTabCell_3()<UITableViewDelegate>
 @property (nonatomic, strong) UIButton *topButton;
-@property (nonatomic, strong) ZGRacTableView *tableView;
+@property (nonatomic, strong) DRacTableView *tableView;
 /** 内嵌tableview的数据源*/
 @property (nonatomic, strong) NSArray *subTable_dataSource;
 @end
@@ -40,7 +40,7 @@
         make.bottom.mas_equalTo(-kScale_W(10));
     }];
 }
-//+ (CGFloat)cellHeightForCellModel:(id<ZGRacModelDelegate>)cellModel{
+//+ (CGFloat)cellHeightForCellModel:(id<RACModelDelegate>)cellModel{
 //    return [cellModel.cellHeight floatValue];
 //}
 - (void)bindingCellData{
@@ -111,9 +111,9 @@
     editingStyle = UITableViewCellEditingStyleDelete;
 }
 #pragma mark - getter/setter
-- (ZGRacTableView *)tableView{
+- (DRacTableView *)tableView{
     if(!_tableView){
-        _tableView = [[ZGRacTableView alloc]init];
+        _tableView = [[DRacTableView alloc]init];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.bounces = NO;
