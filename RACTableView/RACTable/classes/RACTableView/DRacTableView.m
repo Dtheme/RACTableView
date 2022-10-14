@@ -7,12 +7,12 @@
 //
 
 #import "DRacTableView.h"
-#import "RACProxy.h"
+#import "DzwRACProxy.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 
 @interface DRacTableView ()
-@property (nonatomic, strong) RACProxy *delegateProxy;
-@property (nonatomic, strong) RACProxy *dataSourceProxy;
+@property (nonatomic, strong) DzwRACProxy *delegateProxy;
+@property (nonatomic, strong) DzwRACProxy *dataSourceProxy;
 @end
 
 @implementation DRacTableView
@@ -160,17 +160,17 @@
     [super setDataSource:(id<UITableViewDataSource>)self.dataSourceProxy];
 }
 
-- (RACProxy *)delegateProxy {
+- (DzwRACProxy *)delegateProxy {
     if (!_delegateProxy) {
-        _delegateProxy = [[RACProxy alloc] init];
+        _delegateProxy = [[DzwRACProxy alloc] init];
         _delegateProxy.receiver = self;
     }
     return _delegateProxy;
 }
 
-- (RACProxy *)dataSourceProxy {
+- (DzwRACProxy *)dataSourceProxy {
     if (!_dataSourceProxy) {
-        _dataSourceProxy = [[RACProxy alloc] init];
+        _dataSourceProxy = [[DzwRACProxy alloc] init];
         _dataSourceProxy.receiver = self;
     }
     return _dataSourceProxy;

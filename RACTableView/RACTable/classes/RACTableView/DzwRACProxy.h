@@ -1,5 +1,5 @@
 //
-//  RXMessageMiddleware.h
+//  DzwRACProxy.h
 //  RACTable
 //
 //  Created by dzw on 2021/1/1.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RACProxy : NSObject
+@interface DzwRACProxy : NSObject
 
 @property (nonatomic, weak) id middleman;
 @property (nonatomic, weak) id receiver;

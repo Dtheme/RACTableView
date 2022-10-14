@@ -35,7 +35,7 @@
 		040DFC4B269C155F00E22CD2 /* YYFPSLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 040DFC4A269C155F00E22CD2 /* YYFPSLabel.m */; };
 		045AE42126B8E6F000FE1B5A /* UIView+RAC.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE40D26B8E6F000FE1B5A /* UIView+RAC.m */; };
 		045AE42226B8E6F000FE1B5A /* NSObject+RAC.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE40F26B8E6F000FE1B5A /* NSObject+RAC.m */; };
-		045AE42326B8E6F000FE1B5A /* RACProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE41226B8E6F000FE1B5A /* RACProxy.m */; };
+		045AE42326B8E6F000FE1B5A /* DzwRACProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE41226B8E6F000FE1B5A /* DzwRACProxy.m */; };
 		045AE42426B8E6F000FE1B5A /* UITableView+FDTemplateLayoutCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE41326B8E6F000FE1B5A /* UITableView+FDTemplateLayoutCell.m */; };
 		045AE42526B8E6F000FE1B5A /* UITableView+FDKeyedHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE41726B8E6F000FE1B5A /* UITableView+FDKeyedHeightCache.m */; };
 		045AE42626B8E6F000FE1B5A /* UITableViewCell+RAC.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE41826B8E6F000FE1B5A /* UITableViewCell+RAC.m */; };
@@ -120,7 +120,7 @@
 		045AE40F26B8E6F000FE1B5A /* NSObject+RAC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+RAC.m"; sourceTree = "<group>"; };
 		045AE41026B8E6F000FE1B5A /* UITableViewCell+RAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewCell+RAC.h"; sourceTree = "<group>"; };
 		045AE41126B8E6F000FE1B5A /* UITableView+RACTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+RACTableView.h"; sourceTree = "<group>"; };
-		045AE41226B8E6F000FE1B5A /* RACProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RACProxy.m; sourceTree = "<group>"; };
+		045AE41226B8E6F000FE1B5A /* DzwRACProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DzwRACProxy.m; sourceTree = "<group>"; };
 		045AE41326B8E6F000FE1B5A /* UITableView+FDTemplateLayoutCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutCell.m"; sourceTree = "<group>"; };
 		045AE41426B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDIndexPathHeightCache.h"; sourceTree = "<group>"; };
 		045AE41526B8E6F000FE1B5A /* UIView+RAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RAC.h"; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 		045AE41926B8E6F000FE1B5A /* RACTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RACTableView.h; sourceTree = "<group>"; };
 		045AE41A26B8E6F000FE1B5A /* NSObject+RAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+RAC.h"; sourceTree = "<group>"; };
 		045AE41B26B8E6F000FE1B5A /* UITableView+FDTemplateLayoutCellDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDTemplateLayoutCellDebug.m"; sourceTree = "<group>"; };
-		045AE41C26B8E6F000FE1B5A /* RACProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RACProxy.h; sourceTree = "<group>"; };
+		045AE41C26B8E6F000FE1B5A /* DzwRACProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DzwRACProxy.h; sourceTree = "<group>"; };
 		045AE41D26B8E6F000FE1B5A /* UITableView+RACTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+RACTableView.m"; sourceTree = "<group>"; };
 		045AE41E26B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+FDIndexPathHeightCache.m"; sourceTree = "<group>"; };
 		045AE41F26B8E6F000FE1B5A /* UITableView+FDTemplateLayoutCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+FDTemplateLayoutCell.h"; sourceTree = "<group>"; };
@@ -220,15 +220,10 @@
 		040DFC09269BF1DD00E22CD2 /* demo */ = {
 			isa = PBXGroup;
 			children = (
+				7878C03228F94E2900673E95 /* VM */,
+				7878C03128F94E0E00673E95 /* VC */,
+				7878C03028F94E0500673E95 /* Models */,
 				040DFC0C269BF1DD00E22CD2 /* cells */,
-				040DFC24269BF1DD00E22CD2 /* DzwTestTabModel.h */,
-				040DFC1F269BF1DD00E22CD2 /* DzwTestTabModel.m */,
-				040DFC20269BF1DD00E22CD2 /* DzwTestTabModel2.h */,
-				040DFC23269BF1DD00E22CD2 /* DzwTestTabModel2.m */,
-				040DFC0A269BF1DD00E22CD2 /* DzwTestTabVC.h */,
-				040DFC22269BF1DD00E22CD2 /* DzwTestTabVC.m */,
-				040DFC0B269BF1DD00E22CD2 /* DzwTestTabVM.h */,
-				040DFC21269BF1DD00E22CD2 /* DzwTestTabVM.m */,
 			);
 			path = demo;
 			sourceTree = "<group>";
@@ -300,8 +295,8 @@
 				045AE41826B8E6F000FE1B5A /* UITableViewCell+RAC.m */,
 				045AE41526B8E6F000FE1B5A /* UIView+RAC.h */,
 				045AE40D26B8E6F000FE1B5A /* UIView+RAC.m */,
-				045AE41C26B8E6F000FE1B5A /* RACProxy.h */,
-				045AE41226B8E6F000FE1B5A /* RACProxy.m */,
+				045AE41C26B8E6F000FE1B5A /* DzwRACProxy.h */,
+				045AE41226B8E6F000FE1B5A /* DzwRACProxy.m */,
 				045AE41626B8E6F000FE1B5A /* DRacTableView.h */,
 				045AE40C26B8E6F000FE1B5A /* DRacTableView.m */,
 			);
@@ -324,6 +319,35 @@
 				5443B1BE0A5DC464D162CBE1 /* Pods-RACTable.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		7878C03028F94E0500673E95 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				040DFC24269BF1DD00E22CD2 /* DzwTestTabModel.h */,
+				040DFC1F269BF1DD00E22CD2 /* DzwTestTabModel.m */,
+				040DFC20269BF1DD00E22CD2 /* DzwTestTabModel2.h */,
+				040DFC23269BF1DD00E22CD2 /* DzwTestTabModel2.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7878C03128F94E0E00673E95 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				040DFC0A269BF1DD00E22CD2 /* DzwTestTabVC.h */,
+				040DFC22269BF1DD00E22CD2 /* DzwTestTabVC.m */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		7878C03228F94E2900673E95 /* VM */ = {
+			isa = PBXGroup;
+			children = (
+				040DFC0B269BF1DD00E22CD2 /* DzwTestTabVM.h */,
+				040DFC21269BF1DD00E22CD2 /* DzwTestTabVM.m */,
+			);
+			path = VM;
 			sourceTree = "<group>";
 		};
 		FA9FA4939A8C34EDD3FD24A3 /* Frameworks */ = {
@@ -527,7 +551,7 @@
 				040DFC3B269BF4B500E22CD2 /* DzwBaseVC.m in Sources */,
 				045AE42126B8E6F000FE1B5A /* UIView+RAC.m in Sources */,
 				040DFC2F269BF1DD00E22CD2 /* DzwTestTabCell_4.m in Sources */,
-				045AE42326B8E6F000FE1B5A /* RACProxy.m in Sources */,
+				045AE42326B8E6F000FE1B5A /* DzwRACProxy.m in Sources */,
 				040DFBB9269BEC6800E22CD2 /* main.m in Sources */,
 				045AE42226B8E6F000FE1B5A /* NSObject+RAC.m in Sources */,
 				040DFC37269BF1DD00E22CD2 /* DzwTestTabModel2.m in Sources */,

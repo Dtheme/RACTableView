@@ -54,7 +54,7 @@
         cellMd1.detailString = [NSString stringWithFormat:@"详情：section %d",i];
         //测试不给高度 自适应高度
         cellMd1.cellNib = [DzwTestTabCell_2 class];
-        cellMd1.cellReuseIdentifier = [NSString stringWithFormat:@"DzwTestTabCell_2_%d",i];
+//        cellMd1.cellReuseIdentifier = [NSString stringWithFormat:@"DzwTestTabCell_2_%d",i];
         [t_modelsArr addObject:cellMd1];
 
         DzwTestTabModel *cellMd2 = [[DzwTestTabModel alloc]init];
