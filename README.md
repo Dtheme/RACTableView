@@ -5,7 +5,10 @@
 ### 解决什么问题？
 1. 面对简单的列表，我们需要重复写tableView的delegate和DataSource的代码，试图减少节省这部分重复的工作。
 2. 面对复杂列表，我们在MVC下会让控制器变得臃肿，所以采用了MVVM的结构，分离业务逻辑到vm，rac作为数据绑定方案，把逻辑代码集中，避免结构混乱的问题。
-3. cell高度计算或自适应问题。a.可以使用自定义计算高度，将会对高度进行缓存。b.支持使用系统UITableViewAutomaticDimension，虽然不建议使用这种方式进行自适应。c.使用https://github.com/forkingdog/UITableView-FDTemplateLayoutCell 进行高度自适应，cell使用autolayout进行布局。因此引入了依赖masonry。
+3. cell高度计算或自适应问题。
+    a.可以使用自定义计算高度，将会对高度进行缓存。
+    b.支持使用系统UITableViewAutomaticDimension，虽然不建议使用这种方式进行自适应。
+    c.使用https://github.com/forkingdog/UITableView-FDTemplateLayoutCell 进行高度自适应，cell使用autolayout进行布局。因此引入了依赖masonry。
 
 ### 使用
 
@@ -35,7 +38,7 @@
     return _tableView;
 }
 ```
-
+cell中点击事件的处理问题：
 
 
 a. 如果需要获取cell或者header、footer的实例 提供了`ZGRacTableViewDelegate` 可以获取对应indexpath的实例和相关联的数据源，参考上面`_tableView.rac_delegate = self;`
