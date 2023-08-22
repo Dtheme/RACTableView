@@ -44,6 +44,10 @@
 		045AE42926B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE41E26B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.m */; };
 		0496E8F72786DFD300147B13 /* DRacTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE40C26B8E6F000FE1B5A /* DRacTableView.m */; };
 		2FA135A0ED1A49AAF416ABF2 /* Pods_RACTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5D81DD619D449CBEA32D5E /* Pods_RACTable.framework */; };
+		780361E12A946A150068F69E /* NSObject+routerInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 780361D92A946A150068F69E /* NSObject+routerInvocation.m */; };
+		780361E22A946A150068F69E /* ResponderEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780361DB2A946A150068F69E /* ResponderEventManager.m */; };
+		780361E32A946A150068F69E /* UIResponder+DResponderRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 780361DE2A946A150068F69E /* UIResponder+DResponderRouter.m */; };
+		780361E42A946A150068F69E /* DResponderRouteConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 780361E02A946A150068F69E /* DResponderRouteConst.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +142,14 @@
 		46B093C1C4313BCCC61D349C /* Pods-RACTable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RACTable.debug.xcconfig"; path = "Target Support Files/Pods-RACTable/Pods-RACTable.debug.xcconfig"; sourceTree = "<group>"; };
 		4F5D81DD619D449CBEA32D5E /* Pods_RACTable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RACTable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5443B1BE0A5DC464D162CBE1 /* Pods-RACTable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RACTable.release.xcconfig"; path = "Target Support Files/Pods-RACTable/Pods-RACTable.release.xcconfig"; sourceTree = "<group>"; };
+		780361D92A946A150068F69E /* NSObject+routerInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+routerInvocation.m"; sourceTree = "<group>"; };
+		780361DA2A946A150068F69E /* ResponderEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponderEventManager.h; sourceTree = "<group>"; };
+		780361DB2A946A150068F69E /* ResponderEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponderEventManager.m; sourceTree = "<group>"; };
+		780361DC2A946A150068F69E /* UIResponder+DResponderRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+DResponderRouter.h"; sourceTree = "<group>"; };
+		780361DD2A946A150068F69E /* DResponderRouteConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DResponderRouteConst.h; sourceTree = "<group>"; };
+		780361DE2A946A150068F69E /* UIResponder+DResponderRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+DResponderRouter.m"; sourceTree = "<group>"; };
+		780361DF2A946A150068F69E /* NSObject+routerInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+routerInvocation.h"; sourceTree = "<group>"; };
+		780361E02A946A150068F69E /* DResponderRouteConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DResponderRouteConst.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +311,14 @@
 				045AE41226B8E6F000FE1B5A /* DzwRACProxy.m */,
 				045AE41626B8E6F000FE1B5A /* DRacTableView.h */,
 				045AE40C26B8E6F000FE1B5A /* DRacTableView.m */,
+				780361DF2A946A150068F69E /* NSObject+routerInvocation.h */,
+				780361D92A946A150068F69E /* NSObject+routerInvocation.m */,
+				780361DA2A946A150068F69E /* ResponderEventManager.h */,
+				780361DB2A946A150068F69E /* ResponderEventManager.m */,
+				780361DC2A946A150068F69E /* UIResponder+DResponderRouter.h */,
+				780361DE2A946A150068F69E /* UIResponder+DResponderRouter.m */,
+				780361DD2A946A150068F69E /* DResponderRouteConst.h */,
+				780361E02A946A150068F69E /* DResponderRouteConst.m */,
 			);
 			path = RACTableView;
 			sourceTree = "<group>";
@@ -539,10 +559,13 @@
 				040DFC2A269BF1DD00E22CD2 /* DzwTestSectionFooter.m in Sources */,
 				045AE42826B8E6F000FE1B5A /* UITableView+RACTableView.m in Sources */,
 				045AE42926B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.m in Sources */,
+				780361E42A946A150068F69E /* DResponderRouteConst.m in Sources */,
 				040DFC29269BF1DD00E22CD2 /* DzwTestSectionHeader.m in Sources */,
 				040DFC35269BF1DD00E22CD2 /* DzwTestTabVM.m in Sources */,
+				780361E12A946A150068F69E /* NSObject+routerInvocation.m in Sources */,
 				040DFC36269BF1DD00E22CD2 /* DzwTestTabVC.m in Sources */,
 				040DFBAE269BEC6600E22CD2 /* ViewController.m in Sources */,
+				780361E32A946A150068F69E /* UIResponder+DResponderRouter.m in Sources */,
 				040DFC2B269BF1DD00E22CD2 /* DzwTestTabCell_2.m in Sources */,
 				040DFBA8269BEC6600E22CD2 /* AppDelegate.m in Sources */,
 				040DFC2E269BF1DD00E22CD2 /* DzwTestSubCell.m in Sources */,
@@ -553,6 +576,7 @@
 				040DFC2F269BF1DD00E22CD2 /* DzwTestTabCell_4.m in Sources */,
 				045AE42326B8E6F000FE1B5A /* DzwRACProxy.m in Sources */,
 				040DFBB9269BEC6800E22CD2 /* main.m in Sources */,
+				780361E22A946A150068F69E /* ResponderEventManager.m in Sources */,
 				045AE42226B8E6F000FE1B5A /* NSObject+RAC.m in Sources */,
 				040DFC37269BF1DD00E22CD2 /* DzwTestTabModel2.m in Sources */,
 				040DFC34269BF1DD00E22CD2 /* DzwTestTabModel.m in Sources */,

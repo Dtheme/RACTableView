@@ -13,5 +13,8 @@
 #import "UITableViewCell+RAC.h"
 #import "UIView+RAC.h"
 #import "UITableView+RACTableView.h"
-
+#import "NSObject+routerInvocation.h"
+#import "ResponderEventManager.h"
+#import "UIResponder+DResponderRouter.h"
+#import "DResponderRouteConst.h"
 #endif /* RACTableView_h */

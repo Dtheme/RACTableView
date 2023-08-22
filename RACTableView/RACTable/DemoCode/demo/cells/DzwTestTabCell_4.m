@@ -40,9 +40,6 @@
         
     RACChannelTo(self.infoTextV,text) = RACChannelTo(((DzwTestTabModel *)self.cellModel),detailString);
     
-//    [RACObserve(((DzwTestTabModel *)self.cellModel),detailString) subscribeNext:^(id  _Nullable x) {
-//        NSLog(@"%@",x);
-//    }];
 }
 
 - (void)textViewDidChange:(UITextView *)textView{

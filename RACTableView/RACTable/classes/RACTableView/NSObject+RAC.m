@@ -105,6 +105,14 @@
     return cellHeight;
 }
 
+- (void)setIndexPath:(NSIndexPath *)indexPath{
+    objc_setAssociatedObject(self, @selector(indexPath), indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSIndexPath *)indexPath{
+    return objc_getAssociatedObject(self, _cmd);
+}
+
 -(void)mutableArray:(SEL)arrProperty addObject:(id)obj{
     [[self mutableArrayValueForKey:NSStringFromSelector(arrProperty)] addObject:obj];
 }

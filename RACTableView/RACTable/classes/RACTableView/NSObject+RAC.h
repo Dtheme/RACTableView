@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isfold;
 @property (nonatomic, unsafe_unretained) Class<RACSectionViewDelegate> sectionHeaderClass;
 @property (nonatomic, strong) NSNumber *sectionHeaderHeight;
+@property (nonatomic, strong) NSIndexPath *indexPath;
 
 @property (nonatomic, unsafe_unretained) Class<RACSectionViewDelegate> sectionFooterClass;
 @property (nonatomic, strong) NSNumber *sectionFooterHeight;
