@@ -14,6 +14,7 @@
 #import "DzwTool.h"
 #import "CategoryHeader.h"
 #import <YYKit/YYKit.h>
+#import "UIResponder+Router.h"
 
 #pragma mark - global define
 
@@ -37,4 +38,6 @@
 #define kISNullString(str) (([str isKindOfClass:[NSNull class]]|| [str isEqualToString:@"(null)"] || str == nil || [str length] < 1) ? YES : NO )
 #define kISNullArray(array) (array == nil || [array isKindOfClass:[NSNull class]] || array.count == 0 ||[array isEqual:[NSNull null]])
 
+#define DzwCellEventName(name) [NSString stringWithFormat:@"dzwCell_%@",NSStringFromSelector(_cmd)]
+#define DzwCellIndexPath @"indexPath"
 #endif /* Dzwheader_pch */

@@ -44,10 +44,13 @@
 		045AE42926B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE41E26B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.m */; };
 		0496E8F72786DFD300147B13 /* DRacTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 045AE40C26B8E6F000FE1B5A /* DRacTableView.m */; };
 		2FA135A0ED1A49AAF416ABF2 /* Pods_RACTable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F5D81DD619D449CBEA32D5E /* Pods_RACTable.framework */; };
-		780361E12A946A150068F69E /* NSObject+routerInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 780361D92A946A150068F69E /* NSObject+routerInvocation.m */; };
 		780361E22A946A150068F69E /* ResponderEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 780361DB2A946A150068F69E /* ResponderEventManager.m */; };
 		780361E32A946A150068F69E /* UIResponder+DResponderRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 780361DE2A946A150068F69E /* UIResponder+DResponderRouter.m */; };
 		780361E42A946A150068F69E /* DResponderRouteConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 780361E02A946A150068F69E /* DResponderRouteConst.m */; };
+		7809C46A2AA87152008316D1 /* UIResponder+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = 7809C4662AA87152008316D1 /* UIResponder+Router.m */; };
+		7809C46B2AA87152008316D1 /* UIViewController+Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 7809C4672AA87152008316D1 /* UIViewController+Event.m */; };
+		7809C46F2AA8743C008316D1 /* DzwTestResponsechainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7809C46D2AA8743B008316D1 /* DzwTestResponsechainCell.m */; };
+		7809C4702AA8743C008316D1 /* DzwTestResponsechainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7809C46E2AA8743B008316D1 /* DzwTestResponsechainCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,14 +145,19 @@
 		46B093C1C4313BCCC61D349C /* Pods-RACTable.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RACTable.debug.xcconfig"; path = "Target Support Files/Pods-RACTable/Pods-RACTable.debug.xcconfig"; sourceTree = "<group>"; };
 		4F5D81DD619D449CBEA32D5E /* Pods_RACTable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RACTable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5443B1BE0A5DC464D162CBE1 /* Pods-RACTable.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RACTable.release.xcconfig"; path = "Target Support Files/Pods-RACTable/Pods-RACTable.release.xcconfig"; sourceTree = "<group>"; };
-		780361D92A946A150068F69E /* NSObject+routerInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+routerInvocation.m"; sourceTree = "<group>"; };
 		780361DA2A946A150068F69E /* ResponderEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponderEventManager.h; sourceTree = "<group>"; };
 		780361DB2A946A150068F69E /* ResponderEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponderEventManager.m; sourceTree = "<group>"; };
 		780361DC2A946A150068F69E /* UIResponder+DResponderRouter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+DResponderRouter.h"; sourceTree = "<group>"; };
 		780361DD2A946A150068F69E /* DResponderRouteConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DResponderRouteConst.h; sourceTree = "<group>"; };
 		780361DE2A946A150068F69E /* UIResponder+DResponderRouter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+DResponderRouter.m"; sourceTree = "<group>"; };
-		780361DF2A946A150068F69E /* NSObject+routerInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+routerInvocation.h"; sourceTree = "<group>"; };
 		780361E02A946A150068F69E /* DResponderRouteConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DResponderRouteConst.m; sourceTree = "<group>"; };
+		7809C4632AA87152008316D1 /* UIViewController+Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Event.h"; sourceTree = "<group>"; };
+		7809C4642AA87152008316D1 /* UIResponder+Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+Router.h"; sourceTree = "<group>"; };
+		7809C4662AA87152008316D1 /* UIResponder+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+Router.m"; sourceTree = "<group>"; };
+		7809C4672AA87152008316D1 /* UIViewController+Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Event.m"; sourceTree = "<group>"; };
+		7809C46C2AA8743B008316D1 /* DzwTestResponsechainCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DzwTestResponsechainCell.h; sourceTree = "<group>"; };
+		7809C46D2AA8743B008316D1 /* DzwTestResponsechainCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DzwTestResponsechainCell.m; sourceTree = "<group>"; };
+		7809C46E2AA8743B008316D1 /* DzwTestResponsechainCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DzwTestResponsechainCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +269,9 @@
 				040DFC18269BF1DD00E22CD2 /* DzwTestTabCell.h */,
 				040DFC11269BF1DD00E22CD2 /* DzwTestTabCell.m */,
 				040DFC12269BF1DD00E22CD2 /* DzwTestTabCell.xib */,
+				7809C46C2AA8743B008316D1 /* DzwTestResponsechainCell.h */,
+				7809C46D2AA8743B008316D1 /* DzwTestResponsechainCell.m */,
+				7809C46E2AA8743B008316D1 /* DzwTestResponsechainCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -290,9 +301,21 @@
 		045AE40A26B8E6F000FE1B5A /* RACTableView */ = {
 			isa = PBXGroup;
 			children = (
+				045AE41626B8E6F000FE1B5A /* DRacTableView.h */,
+				045AE40C26B8E6F000FE1B5A /* DRacTableView.m */,
+				780361DD2A946A150068F69E /* DResponderRouteConst.h */,
+				780361E02A946A150068F69E /* DResponderRouteConst.m */,
+				045AE41C26B8E6F000FE1B5A /* DzwRACProxy.h */,
+				045AE41226B8E6F000FE1B5A /* DzwRACProxy.m */,
 				045AE41A26B8E6F000FE1B5A /* NSObject+RAC.h */,
 				045AE40F26B8E6F000FE1B5A /* NSObject+RAC.m */,
 				045AE41926B8E6F000FE1B5A /* RACTableView.h */,
+				780361DA2A946A150068F69E /* ResponderEventManager.h */,
+				780361DB2A946A150068F69E /* ResponderEventManager.m */,
+				780361DC2A946A150068F69E /* UIResponder+DResponderRouter.h */,
+				780361DE2A946A150068F69E /* UIResponder+DResponderRouter.m */,
+				7809C4642AA87152008316D1 /* UIResponder+Router.h */,
+				7809C4662AA87152008316D1 /* UIResponder+Router.m */,
 				045AE41426B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.h */,
 				045AE41E26B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.m */,
 				045AE40B26B8E6F000FE1B5A /* UITableView+FDKeyedHeightCache.h */,
@@ -307,18 +330,8 @@
 				045AE41826B8E6F000FE1B5A /* UITableViewCell+RAC.m */,
 				045AE41526B8E6F000FE1B5A /* UIView+RAC.h */,
 				045AE40D26B8E6F000FE1B5A /* UIView+RAC.m */,
-				045AE41C26B8E6F000FE1B5A /* DzwRACProxy.h */,
-				045AE41226B8E6F000FE1B5A /* DzwRACProxy.m */,
-				045AE41626B8E6F000FE1B5A /* DRacTableView.h */,
-				045AE40C26B8E6F000FE1B5A /* DRacTableView.m */,
-				780361DF2A946A150068F69E /* NSObject+routerInvocation.h */,
-				780361D92A946A150068F69E /* NSObject+routerInvocation.m */,
-				780361DA2A946A150068F69E /* ResponderEventManager.h */,
-				780361DB2A946A150068F69E /* ResponderEventManager.m */,
-				780361DC2A946A150068F69E /* UIResponder+DResponderRouter.h */,
-				780361DE2A946A150068F69E /* UIResponder+DResponderRouter.m */,
-				780361DD2A946A150068F69E /* DResponderRouteConst.h */,
-				780361E02A946A150068F69E /* DResponderRouteConst.m */,
+				7809C4632AA87152008316D1 /* UIViewController+Event.h */,
+				7809C4672AA87152008316D1 /* UIViewController+Event.m */,
 			);
 			path = RACTableView;
 			sourceTree = "<group>";
@@ -486,6 +499,7 @@
 				040DFC31269BF1DD00E22CD2 /* DzwTestTabCell_2.xib in Resources */,
 				040DFBB6269BEC6800E22CD2 /* LaunchScreen.storyboard in Resources */,
 				040DFC33269BF1DD00E22CD2 /* DzwTestTabCell_4.xib in Resources */,
+				7809C4702AA8743C008316D1 /* DzwTestResponsechainCell.xib in Resources */,
 				040DFBB3269BEC6800E22CD2 /* Assets.xcassets in Resources */,
 				040DFC2D269BF1DD00E22CD2 /* DzwTestTabCell.xib in Resources */,
 				040DFBB1269BEC6600E22CD2 /* Main.storyboard in Resources */,
@@ -562,10 +576,10 @@
 				780361E42A946A150068F69E /* DResponderRouteConst.m in Sources */,
 				040DFC29269BF1DD00E22CD2 /* DzwTestSectionHeader.m in Sources */,
 				040DFC35269BF1DD00E22CD2 /* DzwTestTabVM.m in Sources */,
-				780361E12A946A150068F69E /* NSObject+routerInvocation.m in Sources */,
 				040DFC36269BF1DD00E22CD2 /* DzwTestTabVC.m in Sources */,
 				040DFBAE269BEC6600E22CD2 /* ViewController.m in Sources */,
 				780361E32A946A150068F69E /* UIResponder+DResponderRouter.m in Sources */,
+				7809C46A2AA87152008316D1 /* UIResponder+Router.m in Sources */,
 				040DFC2B269BF1DD00E22CD2 /* DzwTestTabCell_2.m in Sources */,
 				040DFBA8269BEC6600E22CD2 /* AppDelegate.m in Sources */,
 				040DFC2E269BF1DD00E22CD2 /* DzwTestSubCell.m in Sources */,
@@ -579,6 +593,8 @@
 				780361E22A946A150068F69E /* ResponderEventManager.m in Sources */,
 				045AE42226B8E6F000FE1B5A /* NSObject+RAC.m in Sources */,
 				040DFC37269BF1DD00E22CD2 /* DzwTestTabModel2.m in Sources */,
+				7809C46B2AA87152008316D1 /* UIViewController+Event.m in Sources */,
+				7809C46F2AA8743C008316D1 /* DzwTestResponsechainCell.m in Sources */,
 				040DFC34269BF1DD00E22CD2 /* DzwTestTabModel.m in Sources */,
 				045AE42626B8E6F000FE1B5A /* UITableViewCell+RAC.m in Sources */,
 				045AE42726B8E6F000FE1B5A /* UITableView+FDTemplateLayoutCellDebug.m in Sources */,

@@ -54,9 +54,19 @@
         DzwTestTabModel *md = input.third;
         
         NSLog(@"🌗🌗[RACCommand]点击了cell 序列号是：%ld-%ld ,cell文本：%@",indexPath.section,indexPath.row,md.titleString);
-    
+        
         return [RACSignal empty];
     }];
+}
+#pragma mark - test case
+-(void)dzwCell_alphaAction:(NSDictionary *)userinfo{
+    NSLog(@"alpha------------- %@",userinfo);
+}
+-(void)dzwCell_betaAction:(NSDictionary *)userinfo{
+    NSLog(@"beta------------- %@",userinfo);
+}
+-(void)dzwCell_gamaAction:(NSDictionary *)userinfo{
+    NSLog(@"gama------------- %@",userinfo);
 }
 
 #pragma mark - RACTableViewDelegate

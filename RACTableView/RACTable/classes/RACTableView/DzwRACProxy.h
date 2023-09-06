@@ -12,5 +12,7 @@
 
 @property (nonatomic, weak) id middleman;
 @property (nonatomic, weak) id receiver;
-
++ (__kindof DzwRACProxy *)sharedEventProxy;
+- (void)handleEvent:(NSString *)eventName userInfo:(NSDictionary *)userInfo withTarget:(UIViewController*)target;
+- (NSInvocation *)createInvocationWithSelector:(SEL)selector;
 @end

@@ -72,6 +72,7 @@
     if (_rac_delegate && [_rac_delegate respondsToSelector:@selector(rac_tableView:cell:cellForRowAtIndexPath:)]) {
         [_rac_delegate rac_tableView:tableView cell:cell cellForRowAtIndexPath:indexPath];
     }
+    cell.cellModel.indexPath = indexPath;
     return cell;
 }
 

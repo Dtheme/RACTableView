@@ -9,6 +9,7 @@
 #import "DzwTestTabVM.h"
 #import "DzwTestTabModel.h"
 #import "DzwTestTabModel2.h"
+#import "DzwTestResponsechainCell.h"
 
 @implementation DzwTestTabVM
 #pragma mark - 组装cell和header、footer数据源
@@ -63,13 +64,18 @@
         cellMd2.detailString = [NSString stringWithFormat:@"详情：section %d",i];
         cellMd2.cellNib = [DzwTestTabCell class];
         [t_modelsArr addObject:cellMd2];
-
+        
         DzwTestTabModel *cellMd3 = [[DzwTestTabModel alloc]init];
-        cellMd3.imageUrl = @"img_elective_finish";
-        cellMd3.titleString = @"cell内嵌textview高度自适应";
-        cellMd3.cellNib = [DzwTestTabCell_4 class];
-        cellMd3.cellHeight = @(UITableViewAutomaticDimension);
+        cellMd3.cellNib = [DzwTestResponsechainCell class];
+        cellMd3.cellHeight = @(64);
         [t_modelsArr addObject:cellMd3];
+        
+        DzwTestTabModel *cellMd4 = [[DzwTestTabModel alloc]init];
+        cellMd4.imageUrl = @"img_elective_finish";
+        cellMd4.titleString = @"cell内嵌textview高度自适应";
+        cellMd4.cellNib = [DzwTestTabCell_4 class];
+        cellMd4.cellHeight = @(UITableViewAutomaticDimension);
+        [t_modelsArr addObject:cellMd4];
 
         DzwTestTabModel2 *cell3Md = [self getTestMd2];
         [t_modelsArr addObject:cell3Md];
