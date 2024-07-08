@@ -301,6 +301,7 @@
 		045AE40A26B8E6F000FE1B5A /* RACTableView */ = {
 			isa = PBXGroup;
 			children = (
+				040DFC38269BF4AB00E22CD2 /* base */,
 				7862C02F2C3BD85200D9BD55 /* UI */,
 				782F2BE72ABDD7CB001E278C /* responder */,
 			);
@@ -310,7 +311,6 @@
 		04699B7A269ED7110008480A /* classes */ = {
 			isa = PBXGroup;
 			children = (
-				040DFC38269BF4AB00E22CD2 /* base */,
 				045AE40A26B8E6F000FE1B5A /* RACTableView */,
 			);
 			path = classes;
