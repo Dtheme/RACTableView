@@ -2,9 +2,10 @@
 //  ResponderEventManager.h
 //  DResponderRouter
 //
-//  Created by zhn on 2017/7/27.
-//  Copyright © 2017年 zhn. All rights reserved.
+//  Created by dzw on 2023/9/6.
+//  Copyright © 2023 dzw. All rights reserved.
 //
+
 
 #import <Foundation/Foundation.h>
 

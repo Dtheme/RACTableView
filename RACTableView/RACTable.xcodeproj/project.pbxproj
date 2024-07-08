@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -301,21 +301,57 @@
 		045AE40A26B8E6F000FE1B5A /* RACTableView */ = {
 			isa = PBXGroup;
 			children = (
-				045AE41626B8E6F000FE1B5A /* DRacTableView.h */,
-				045AE40C26B8E6F000FE1B5A /* DRacTableView.m */,
+				7862C02F2C3BD85200D9BD55 /* UI */,
+				782F2BE72ABDD7CB001E278C /* responder */,
+			);
+			path = RACTableView;
+			sourceTree = "<group>";
+		};
+		04699B7A269ED7110008480A /* classes */ = {
+			isa = PBXGroup;
+			children = (
+				040DFC38269BF4AB00E22CD2 /* base */,
+				045AE40A26B8E6F000FE1B5A /* RACTableView */,
+			);
+			path = classes;
+			sourceTree = "<group>";
+		};
+		63690B8F813FADD42B7B1F49 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				46B093C1C4313BCCC61D349C /* Pods-RACTable.debug.xcconfig */,
+				5443B1BE0A5DC464D162CBE1 /* Pods-RACTable.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		782F2BE72ABDD7CB001E278C /* responder */ = {
+			isa = PBXGroup;
+			children = (
+				780361DC2A946A150068F69E /* UIResponder+DResponderRouter.h */,
+				780361DE2A946A150068F69E /* UIResponder+DResponderRouter.m */,
+				7809C4642AA87152008316D1 /* UIResponder+Router.h */,
+				7809C4662AA87152008316D1 /* UIResponder+Router.m */,
+				7809C4632AA87152008316D1 /* UIViewController+Event.h */,
+				7809C4672AA87152008316D1 /* UIViewController+Event.m */,
 				780361DD2A946A150068F69E /* DResponderRouteConst.h */,
 				780361E02A946A150068F69E /* DResponderRouteConst.m */,
+				780361DA2A946A150068F69E /* ResponderEventManager.h */,
+				780361DB2A946A150068F69E /* ResponderEventManager.m */,
+			);
+			path = responder;
+			sourceTree = "<group>";
+		};
+		7862C02F2C3BD85200D9BD55 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				045AE41626B8E6F000FE1B5A /* DRacTableView.h */,
+				045AE40C26B8E6F000FE1B5A /* DRacTableView.m */,
 				045AE41C26B8E6F000FE1B5A /* DzwRACProxy.h */,
 				045AE41226B8E6F000FE1B5A /* DzwRACProxy.m */,
 				045AE41A26B8E6F000FE1B5A /* NSObject+RAC.h */,
 				045AE40F26B8E6F000FE1B5A /* NSObject+RAC.m */,
 				045AE41926B8E6F000FE1B5A /* RACTableView.h */,
-				780361DA2A946A150068F69E /* ResponderEventManager.h */,
-				780361DB2A946A150068F69E /* ResponderEventManager.m */,
-				780361DC2A946A150068F69E /* UIResponder+DResponderRouter.h */,
-				780361DE2A946A150068F69E /* UIResponder+DResponderRouter.m */,
-				7809C4642AA87152008316D1 /* UIResponder+Router.h */,
-				7809C4662AA87152008316D1 /* UIResponder+Router.m */,
 				045AE41426B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.h */,
 				045AE41E26B8E6F000FE1B5A /* UITableView+FDIndexPathHeightCache.m */,
 				045AE40B26B8E6F000FE1B5A /* UITableView+FDKeyedHeightCache.h */,
@@ -330,28 +366,8 @@
 				045AE41826B8E6F000FE1B5A /* UITableViewCell+RAC.m */,
 				045AE41526B8E6F000FE1B5A /* UIView+RAC.h */,
 				045AE40D26B8E6F000FE1B5A /* UIView+RAC.m */,
-				7809C4632AA87152008316D1 /* UIViewController+Event.h */,
-				7809C4672AA87152008316D1 /* UIViewController+Event.m */,
 			);
-			path = RACTableView;
-			sourceTree = "<group>";
-		};
-		04699B7A269ED7110008480A /* classes */ = {
-			isa = PBXGroup;
-			children = (
-				045AE40A26B8E6F000FE1B5A /* RACTableView */,
-				040DFC38269BF4AB00E22CD2 /* base */,
-			);
-			path = classes;
-			sourceTree = "<group>";
-		};
-		63690B8F813FADD42B7B1F49 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				46B093C1C4313BCCC61D349C /* Pods-RACTable.debug.xcconfig */,
-				5443B1BE0A5DC464D162CBE1 /* Pods-RACTable.release.xcconfig */,
-			);
-			path = Pods;
+			path = UI;
 			sourceTree = "<group>";
 		};
 		7878C03028F94E0500673E95 /* Models */ = {

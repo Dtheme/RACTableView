@@ -2,9 +2,10 @@
 //  UIResponder+DResponderRouter.m
 //  DResponderRouter
 //
-//  Created by zhn on 2017/7/26.
-//  Copyright © 2017年 zhn. All rights reserved.
+//  Created by dzw on 2023/8/22.
+//  Copyright © 2023 ZEGO. All rights reserved.
 //
+
 
 #import "UIResponder+DResponderRouter.h"
 #import <objc/runtime.h>
