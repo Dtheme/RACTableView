@@ -1,6 +1,9 @@
 # RACTableView
-当前是demo工程，通用性的tableview的封装方案尝试。未支持cocoapod
 
+[中文](https://github.com/Dtheme/RACTableView/blob/main/README.md) | [English](https://github.com/Dtheme/RACTableView/blob/main/README-en.md)
+---
+
+当前是demo工程，通用性的tableview的封装方案尝试。未支持cocoapod
 
 ### 解决什么问题？
 1. 面对简单的列表，我们需要重复写tableView的delegate和DataSource的代码，试图减少节省这部分重复的工作。
