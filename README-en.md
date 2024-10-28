@@ -1,6 +1,7 @@
 # RACTableView
 
 [中文](https://github.com/Dtheme/RACTableView/blob/main/README.md) | [English](https://github.com/Dtheme/RACTableView/blob/main/README-en.md)
+
 ---
 
 `RACTableView` is a demo project providing a solution for encapsulating generic table views in iOS applications. This solution reduces redundancy, enhances code maintainability, and improves flexibility in event handling within table views. Currently, CocoaPods is not supported.
