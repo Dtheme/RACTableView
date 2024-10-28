@@ -136,7 +136,7 @@ In Step 3, `DzwTestTabCell` is your custom cell, implemented either with pure co
 
 This completes the construction of a fully functional table view.
 
-### Strongly Recommended ###
+### Highly Recommended 
 Consider using [DzwEventRouter](https://github.com/Dtheme/DzwEventRouter) to handle interaction events and avoid reverse delegation. This can replace the following methods:
 
 ```
