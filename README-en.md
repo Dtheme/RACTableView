@@ -6,7 +6,7 @@
 
 `RACTableView` is a demo project providing a solution for encapsulating generic table views in iOS applications. This solution reduces redundancy, enhances code maintainability, and improves flexibility in event handling within table views. Currently, CocoaPods is not supported.
 
-## Problems Solved
+## Why RACTableView
 
 1. **Reducing Redundant Code**: For simple lists, `RACTableView` eliminates the need to repeatedly implement the `tableView` delegate and data source methods, saving time and reducing redundant code.
 2. **Preventing View Controller Bloat**: In complex lists, the MVC architecture can lead to bloated controllers. By adopting the MVVM structure, we separate business logic into the view model, using ReactiveCocoa (RAC) for data binding. This approach centralizes logic and prevents structural confusion.
