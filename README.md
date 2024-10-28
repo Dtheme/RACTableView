@@ -125,7 +125,7 @@ b. 一般情况下不需要实现Delegate和DataSource,如果当前的封装无�
 
 这样一个完整的tableview就构建完成了。
 
-###强烈推荐###
+### 强烈推荐
 结合[DzwEventRouter](https://github.com/Dtheme/DzwEventRouter)替代下面方法处理交互事件和反向代理：
 ```
 - (void)rac_tableView:(UITableView *)tableView cell:(UITableViewCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath;
