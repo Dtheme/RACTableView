@@ -8,4 +8,7 @@ target 'RACTable' do
   pod 'AFNetworking', '4.0.0'
   pod 'YTKNetwork','3.0.4'
   pod 'YYKit', '~> 1.0.9' # FPSLabel 依赖
+  
+  pod 'RxSwift'
+  pod 'RxCocoa'
 end

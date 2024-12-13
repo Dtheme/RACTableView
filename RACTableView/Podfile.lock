@@ -16,6 +16,12 @@ PODS:
     - AFNetworking/NSURLSession
   - Masonry (1.1.0)
   - ReactiveObjC (3.1.1)
+  - RxCocoa (6.7.1):
+    - RxRelay (= 6.7.1)
+    - RxSwift (= 6.7.1)
+  - RxRelay (6.7.1):
+    - RxSwift (= 6.7.1)
+  - RxSwift (6.7.1)
   - YTKNetwork (3.0.4):
     - AFNetworking/NSURLSession (~> 4.0)
   - YYKit (1.0.9):
@@ -26,6 +32,8 @@ DEPENDENCIES:
   - AFNetworking (= 4.0.0)
   - Masonry (= 1.1.0)
   - ReactiveObjC (= 3.1.1)
+  - RxCocoa
+  - RxSwift
   - YTKNetwork (= 3.0.4)
   - YYKit (~> 1.0.9)
 
@@ -34,16 +42,22 @@ SPEC REPOS:
     - AFNetworking
     - Masonry
     - ReactiveObjC
+    - RxCocoa
+    - RxRelay
+    - RxSwift
     - YTKNetwork
     - YYKit
 
 SPEC CHECKSUMS:
-  AFNetworking: d9fdf484a3c723ec3c558a41cc5754c7e845ee77
+  AFNetworking: 42892080606935f7a9ec3fda4927fdd37e9cd369
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
+  RxCocoa: f5609cb4637587a7faa99c5d5787e3ad582b75a4
+  RxRelay: 4151ba01152436b08271e08410135e099880eae5
+  RxSwift: b9a93a26031785159e11abd40d1a55bcb8057e52
   YTKNetwork: a096f80c18c7e7cc0e623a0fbea0a1bfd3f5bcf2
   YYKit: 7cda43304a8dc3696c449041e2cb3107b4e236e7
 
-PODFILE CHECKSUM: 85a3c7638b15bf1791f5cfb6ead14ea1c5157ffb
+PODFILE CHECKSUM: 8e48fb403fe85cb8154c0aa83e8fb28555064097
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.15.2

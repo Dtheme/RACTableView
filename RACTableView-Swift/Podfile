@@ -1,0 +1,14 @@
+platform :ios, '13.0'
+use_frameworks!
+
+target 'RACTableView-Swift' do
+  # Rx
+  pod 'RxSwift', '~> 6.5'
+  pod 'RxCocoa', '~> 6.5'
+  pod 'RxDataSources', '~> 5.0'
+  
+  # Layout
+  pod 'SnapKit', '~> 5.6'
+  # 图片加载
+  pod 'Kingfisher'
+end 
