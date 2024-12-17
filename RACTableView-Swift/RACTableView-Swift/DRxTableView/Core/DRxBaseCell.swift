@@ -2,29 +2,23 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-open class DRxBaseCell<Model: DRxModelProtocol>: UITableViewCell, DRxCellProtocol {
+open class DRxBaseCell<Model: DRxModelProtocol>: UITableViewCell {
     // MARK: - Properties
-    public var cellModel: Model? {
-        didSet {
-            if let model = cellModel {
-                configure(with: model)
-            }
-        }
-    }
+    /// 数据模型
+    public var model: Model?
     
+    /// RxSwift DisposeBag
     public let disposeBag = DisposeBag()
     
     // MARK: - Initialization
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
-        bindData()
     }
     
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
-        bindData()
     }
     
     // MARK: - Setup
@@ -34,11 +28,16 @@ open class DRxBaseCell<Model: DRxModelProtocol>: UITableViewCell, DRxCellProtoco
     
     // MARK: - DRxCellProtocol
     open func configure(with model: Model) {
-        cellModel = model
+        print("=== DRxBaseCell configure called ===")
+        self.model = model
+        bindData()
+        print("=== DRxBaseCell configure end ===")
     }
     
     open func bindData() {
+        print("=== DRxBaseCell bindData called ===")
         // 子类重写此方法来实现数据绑定
+        print("=== DRxBaseCell bindData end ===")
     }
     
     /// 更新Cell高度
@@ -46,7 +45,7 @@ open class DRxBaseCell<Model: DRxModelProtocol>: UITableViewCell, DRxCellProtoco
     ///   - height: 新的高度
     ///   - animated: 是否使用动画
     public func updateHeight(_ height: CGFloat, animated: Bool = true) {
-        cellModel?.updateHeight(height, animated: animated)
+        model?.updateHeight(height, animated: animated)
     }
     
     /// 自动计算并更新高度

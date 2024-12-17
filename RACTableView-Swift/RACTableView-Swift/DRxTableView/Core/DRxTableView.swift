@@ -26,7 +26,11 @@ open class DRxTableView: UITableView {
     public let eventRelay = PublishRelay<DRxTableViewEvent>()
     
     /// 数据源
-    public private(set) lazy var drxDataSource: DRxDataSource = {
+    public var drxDataSource: DRxDataSource {
+        return _drxDataSource
+    }
+    
+    private lazy var _drxDataSource: DRxDataSource = {
         let dataSource = DRxDataSource(tableView: self)
         self.dataSource = dataSource
         return dataSource
@@ -49,9 +53,6 @@ open class DRxTableView: UITableView {
     
     /// 已注册的Header/Footer类型
     private var registeredSupplementaryTypes: Set<String> = []
-    
-    /// 默认动画配置
-    public var defaultAnimation: DRxAnimationConfig = .default
     
     /// 自定义刷新控件
     private lazy var drxRefreshControl: UIRefreshControl = {
@@ -112,10 +113,12 @@ open class DRxTableView: UITableView {
         estimatedRowHeight = 44
         estimatedSectionHeaderHeight = 0
         estimatedSectionFooterHeight = 0
-        
+
         if #available(iOS 15.0, *) {
             sectionHeaderTopPadding = 0
         }
+        //去掉分割线
+        separatorStyle = .none
         
         setupBindings()
     }
@@ -150,7 +153,8 @@ open class DRxTableView: UITableView {
     
     /// 更新数据源
     public func updateData(_ sections: [SectionModel]) {
-        updateData(sections, animation: .none)
+        autoRegisterTypesIfNeeded(sections)
+        _drxDataSource.updateData(sections)
     }
     
     /// 获取指定位置的模型
@@ -240,7 +244,7 @@ open class DRxTableView: UITableView {
             let oldCellIds = Set(oldSection.cells.map { $0.identifier })
             let newCellIds = Set(newSection.cells.map { $0.identifier })
             
-            // 删除的行
+            // 除的行
             for (rowIndex, cell) in oldSection.cells.enumerated() {
                 if !newCellIds.contains(cell.identifier) {
                     changes.deletedRows.append(IndexPath(row: rowIndex, section: sectionIndex))
@@ -263,53 +267,6 @@ open class DRxTableView: UITableView {
         }
         
         return changes
-    }
-    
-    public func updateData(_ sections: [SectionModel], animation: DRxAnimationConfig) {
-        autoRegisterTypesIfNeeded(sections)
-        
-        // 如果是无动画，直接更新
-        guard animation.animation != .none else {
-            drxDataSource.updateData(sections)
-            return
-        }
-        
-        // 计算差异并应用动画
-        let oldSections = drxDataSource.currentSections
-        let changes = calculateChanges(from: oldSections, to: sections)
-        
-        // 应用动画
-        UIView.animate(
-            withDuration: animation.duration,
-            delay: animation.delay,
-            options: animation.options
-        ) {
-            self.beginUpdates()
-            
-            // 更新数据源
-            self.drxDataSource.updateData(sections)
-            
-            // 应用Section变化
-            if !changes.deletedSections.isEmpty {
-                self.deleteSections(IndexSet(changes.deletedSections), with: animation.animation)
-            }
-            if !changes.insertedSections.isEmpty {
-                self.insertSections(IndexSet(changes.insertedSections), with: animation.animation)
-            }
-            
-            // 应用Row变化
-            if !changes.deletedRows.isEmpty {
-                self.deleteRows(at: changes.deletedRows, with: animation.animation)
-            }
-            if !changes.insertedRows.isEmpty {
-                self.insertRows(at: changes.insertedRows, with: animation.animation)
-            }
-            if !changes.updatedRows.isEmpty {
-                self.reloadRows(at: changes.updatedRows, with: animation.animation)
-            }
-            
-            self.endUpdates()
-        }
     }
     
     /// 更新指定位置的Cell高度
@@ -350,11 +307,33 @@ open class DRxTableView: UITableView {
     
     // MARK: - Refresh & LoadMore
     
-    @objc private func handleRefresh() {
-        onRefresh?()
+    /// 开始下拉刷新
+    public func beginHeaderRefreshing() {
+        drxRefreshControl.beginRefreshing()
+        headerRefreshing()
     }
     
-    /// 结束刷新
+    /// 结束下拉刷新
+    public func endHeaderRefreshing() {
+        drxRefreshControl.endRefreshing()
+    }
+    
+    /// 开始上拉加载更多
+    public func beginFooterRefreshing() {
+        isLoadingMore = true
+        footerRefreshing()
+    }
+    
+    /// 结束上拉加载更多
+    public func endFooterRefreshing() {
+        isLoadingMore = false
+    }
+    
+    @objc private func handleRefresh() {
+        headerRefreshing()
+    }
+    
+    /// 束刷新
     public func endRefreshing() {
         drxRefreshControl.endRefreshing()
     }
@@ -366,6 +345,10 @@ open class DRxTableView: UITableView {
     
     // 在 UIScrollViewDelegate 中添加
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 触发滚动事件
+        eventRelay.accept(.didScroll(scrollView))
+        
+        // 处理上拉加载更多
         guard enableLoadMore && !isLoadingMore else { return }
         
         let offsetY = scrollView.contentOffset.y
@@ -373,8 +356,7 @@ open class DRxTableView: UITableView {
         let frameHeight = scrollView.frame.height
         
         if offsetY > contentHeight - frameHeight - DRxConstants.Performance.preloadThreshold {
-            isLoadingMore = true
-            onLoadMore?()
+            beginFooterRefreshing()
         }
     }
     
@@ -403,19 +385,51 @@ open class DRxTableView: UITableView {
         emptyView = view
         updateEmptyViewState()
     }
+    
+    @objc open func headerRefreshing() {
+        // 子类实现
+    }
+    
+    @objc open func footerRefreshing() {
+        // 子类实现
+    }
+    
+    /// 更新指定模型的Cell高度
+    public func updateCellHeight(for model: DRxModelProtocol, height: CGFloat, animated: Bool = true) {
+        // 查找模型对应的indexPath
+        for (sectionIndex, section) in drxDataSource.currentSections.enumerated() {
+            if let rowIndex = section.cells.firstIndex(where: { $0.identifier == model.identifier }) {
+                let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                updateCellHeight(at: indexPath, height: height, animated: animated)
+                break
+            }
+        }
+    }
+    
+    /// 更新高度缓存
+    public func updateHeightCache(for identifier: String, height: CGFloat) {
+        let cacheKey = DRxHeightCache.cacheKey(
+            identifier: identifier,
+            width: bounds.width
+        )
+        heightCache.setHeight(height, for: cacheKey)
+    }
 }
 
 // MARK: - UITableViewDelegate
 extension DRxTableView: UITableViewDelegate {
     
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let model = model(at: indexPath) else {
             return DRxConstants.Height.defaultCell
         }
-        
+
         if model.cellConfiguration.automaticHeight {
+            // 自动高度模式：直接返回 automaticDimension
+            return UITableView.automaticDimension
+        } else {
+            // 手动高度模式：使用缓存或 model 的高度
             if enableHeightCache {
-                // 尝试从缓存获取高度
                 let cacheKey = DRxHeightCache.cacheKey(
                     identifier: model.identifier,
                     width: bounds.width
@@ -424,31 +438,29 @@ extension DRxTableView: UITableViewDelegate {
                     return cachedHeight
                 }
             }
-            return UITableView.automaticDimension
+            return model.cellHeight.value
         }
-        
-        return model.cellHeight.value
     }
-    
-    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
+    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         eventRelay.accept(.willDisplayCell(cell, indexPath))
-        
-        // 缓存自动计算的高度
+
+        // 只对非自动高度的 cell 进行缓存
         if enableHeightCache,
            let model = model(at: indexPath),
-           model.cellConfiguration.automaticHeight {
+           !model.cellConfiguration.automaticHeight {
             let cacheKey = DRxHeightCache.cacheKey(
                 identifier: model.identifier,
                 width: bounds.width
             )
             heightCache.setHeight(cell.bounds.height, for: cacheKey)
         }
-        
+
         if let cell = cell as? UITableViewCell {
             drxDelegate?.tableView(tableView, didGetCell: cell, at: indexPath)
         }
     }
-    
+
     public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         eventRelay.accept(.didEndDisplayingCell(cell, indexPath))
     }
@@ -458,7 +470,9 @@ extension DRxTableView: UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerModel = drxDataSource.currentSections[section].header,
+        // 添加安全检查
+        guard section < drxDataSource.currentSections.count,
+              let headerModel = drxDataSource.currentSections[section].header,
               let config = headerModel.headerConfiguration else {
             return nil
         }
@@ -479,7 +493,9 @@ extension DRxTableView: UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        guard let footerModel = drxDataSource.currentSections[section].footer,
+        // 添加安全检查
+        guard section < drxDataSource.currentSections.count,
+              let footerModel = drxDataSource.currentSections[section].footer,
               let config = footerModel.footerConfiguration else {
             return nil
         }
@@ -500,7 +516,9 @@ extension DRxTableView: UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        guard let headerModel = drxDataSource.currentSections[section].header,
+        // 添加安全检查
+        guard section < drxDataSource.currentSections.count,
+              let headerModel = drxDataSource.currentSections[section].header,
               let config = headerModel.headerConfiguration else {
             return 0
         }
@@ -508,7 +526,9 @@ extension DRxTableView: UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        guard let footerModel = drxDataSource.currentSections[section].footer,
+        // 添加安全检查
+        guard section < drxDataSource.currentSections.count,
+              let footerModel = drxDataSource.currentSections[section].footer,
               let config = footerModel.footerConfiguration else {
             return 0
         }
@@ -520,6 +540,27 @@ extension DRxTableView: UITableViewDelegate {
             view.configure(with: model)
         }
     }
+    
+    // 添加预估高度的处理
+    public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let model = model(at: indexPath) else {
+            return 44
+        }
+        
+        if model.cellConfiguration.automaticHeight {
+            if enableHeightCache {
+                let cacheKey = DRxHeightCache.cacheKey(
+                    identifier: model.identifier,
+                    width: bounds.width
+                )
+                if let cachedHeight = heightCache.height(for: cacheKey) {
+                    return cachedHeight
+                }
+            }
+            return model.cellConfiguration.defaultHeight
+        }
+        return model.cellHeight.value
+    }
 }
 
 // MARK: - Rx Extensions
@@ -528,23 +569,66 @@ extension Reactive where Base: DRxTableView {
     public var events: Observable<DRxTableViewEvent> {
         return base.eventRelay.asObservable()
     }
-    
-    /// 数据源序列
-    public var sections: Observable<[SectionModel]> {
-        return base.drxDataSource.sections
-    }
 }
 
 // 实现模型代理
 extension DRxTableView: DRxModelDelegate {
+    public func reloadCells(rows: [IndexPath], animated: Bool) {
+        if animated {
+            UIView.performWithoutAnimation {
+                self.beginUpdates()
+                if rows.count > 0 {
+                    self.reloadRows(at: rows, with: .automatic)
+                }
+                self.endUpdates()
+            }
+        } else {
+            self.beginUpdates()
+            if rows.count > 0 {
+                self.reloadRows(at: rows, with: .automatic)
+            }
+            self.endUpdates()
+        }
+    }
+    
     public func modelDidUpdateHeight(_ model: DRxModelProtocol, animated: Bool) {
-        // 查找模型对应的indexPath
+        // 查找模型对应的 indexPath
         for (sectionIndex, section) in drxDataSource.currentSections.enumerated() {
             if let rowIndex = section.cells.firstIndex(where: { $0.identifier == model.identifier }) {
                 let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
-                updateCellHeight(at: indexPath, height: model.cellHeight.value, animated: animated)
+
+                if model.cellConfiguration.automaticHeight {
+                    // 自动高度模式（如 NewsTextInputCell）：
+                    // 只需要触发布局更新，不需要重新加载 cell
+                    UIView.performWithoutAnimation {
+                        self.beginUpdates()
+                        self.endUpdates()
+                    }
+                } else {
+                    // 手动高度模式（如 NewsNestedCell）：
+                    // 需要更新缓存并重新加载 cell
+                    let cacheKey = DRxHeightCache.cacheKey(
+                        identifier: model.identifier,
+                        width: bounds.width
+                    )
+                    heightCache.setHeight(model.cellHeight.value, for: cacheKey)
+
+                    if animated {
+                        UIView.animate(withDuration: 0.25) {
+                            self.beginUpdates()
+                            self.reloadRows(at: [indexPath], with: .automatic)
+                            self.endUpdates()
+                        }
+                    } else {
+                        self.beginUpdates()
+                        self.reloadRows(at: [indexPath], with: .automatic)
+                        self.endUpdates()
+                    }
+                }
                 break
             }
         }
     }
 }
+
+

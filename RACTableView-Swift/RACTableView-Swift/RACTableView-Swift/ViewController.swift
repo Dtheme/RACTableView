@@ -1,7 +1,12 @@
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController {
-    // MARK: - UI Elements
+    
+    private let disposeBag = DisposeBag()
+    
+    // Demo 按钮
     private lazy var demoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("DRxTableView Demo", for: .normal)
@@ -13,18 +18,14 @@ class ViewController: UIViewController {
         return button
     }()
     
-    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupActions()
+        bindActions()
     }
     
-    // MARK: - Setup
     private func setupUI() {
-        title = "DRxTableView"
         view.backgroundColor = .white
-        
         view.addSubview(demoButton)
         
         NSLayoutConstraint.activate([
@@ -35,12 +36,14 @@ class ViewController: UIViewController {
         ])
     }
     
-    private func setupActions() {
-        demoButton.addTarget(self, action: #selector(demoButtonTapped), for: .touchUpInside)
-    }
-    
-    // MARK: - Actions
-    @objc private func demoButtonTapped() {
-        
+    private func bindActions() {
+        demoButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                let newsVC = NewsListViewController()
+                let nav = UINavigationController(rootViewController: newsVC)
+                nav.modalPresentationStyle = .fullScreen
+                self?.present(nav, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 } 

@@ -1,5 +1,6 @@
 PODS:
   - Differentiator (5.0.0)
+  - IQKeyboardManager (6.5.19)
   - Kingfisher (8.1.2)
   - RxCocoa (6.8.0):
     - RxRelay (= 6.8.0)
@@ -14,6 +15,7 @@ PODS:
   - SnapKit (5.7.1)
 
 DEPENDENCIES:
+  - IQKeyboardManager
   - Kingfisher
   - RxCocoa (~> 6.5)
   - RxDataSources (~> 5.0)
@@ -23,6 +25,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Differentiator
+    - IQKeyboardManager
     - Kingfisher
     - RxCocoa
     - RxDataSources
@@ -32,6 +35,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  IQKeyboardManager: c8665b3396bd0b79402b4c573eac345a31c7d485
   Kingfisher: dc989619594e24713c83e5a98f89f08850e0c529
   RxCocoa: 2d33c1e1e5d66492052ad46b11024ae287572880
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
@@ -39,6 +43,6 @@ SPEC CHECKSUMS:
   RxSwift: 4e28be97cbcfeee614af26d83415febbf2bf6f45
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
 
-PODFILE CHECKSUM: ca2c8917296513f48288505f0257dded258c9d55
+PODFILE CHECKSUM: 291bf46ad1201d4f2c437531ea6cd2adfbe928e2
 
 COCOAPODS: 1.16.2

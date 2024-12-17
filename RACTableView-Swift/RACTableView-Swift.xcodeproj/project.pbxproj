@@ -7,23 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		78DE7FFE2D0C42D500DADB7E /* DRxBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FE52D0C42D500DADB7E /* DRxBaseCell.swift */; };
-		78DE7FFF2D0C42D500DADB7E /* DRxBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FE62D0C42D500DADB7E /* DRxBaseModel.swift */; };
-		78DE80002D0C42D500DADB7E /* DRxDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FE72D0C42D500DADB7E /* DRxDataSource.swift */; };
-		78DE80012D0C42D500DADB7E /* DRxEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FE82D0C42D500DADB7E /* DRxEmptyView.swift */; };
-		78DE80022D0C42D500DADB7E /* DRxProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FE92D0C42D500DADB7E /* DRxProtocols.swift */; };
-		78DE80032D0C42D500DADB7E /* DRxSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FEA2D0C42D500DADB7E /* DRxSupplementaryView.swift */; };
-		78DE80042D0C42D500DADB7E /* DRxTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FEB2D0C42D500DADB7E /* DRxTableView.swift */; };
-		78DE80052D0C42D500DADB7E /* DRxAnimationConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FED2D0C42D500DADB7E /* DRxAnimationConfig.swift */; };
-		78DE80062D0C42D500DADB7E /* DRxConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FEE2D0C42D500DADB7E /* DRxConstants.swift */; };
-		78DE80072D0C42D500DADB7E /* DRxExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FEF2D0C42D500DADB7E /* DRxExtensions.swift */; };
-		78DE80082D0C42D500DADB7E /* DRxHeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FF02D0C42D500DADB7E /* DRxHeightCache.swift */; };
-		78DE80092D0C42D500DADB7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FF32D0C42D500DADB7E /* AppDelegate.swift */; };
-		78DE800A2D0C42D500DADB7E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FF42D0C42D500DADB7E /* SceneDelegate.swift */; };
-		78DE800B2D0C42D500DADB7E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DE7FF52D0C42D500DADB7E /* ViewController.swift */; };
-		78DE800C2D0C42D500DADB7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78DE7FF72D0C42D500DADB7E /* Assets.xcassets */; };
-		78DE800E2D0C42D500DADB7E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78DE7FFA2D0C42D500DADB7E /* LaunchScreen.storyboard */; };
-		78DE800F2D0C42D500DADB7E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78DE7FFC2D0C42D500DADB7E /* Main.storyboard */; };
+		782D99692D11360E008BB1A7 /* DRxBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99402D11360E008BB1A7 /* DRxBaseCell.swift */; };
+		782D996A2D11360E008BB1A7 /* DRxBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99412D11360E008BB1A7 /* DRxBaseModel.swift */; };
+		782D996B2D11360E008BB1A7 /* DRxDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99422D11360E008BB1A7 /* DRxDataSource.swift */; };
+		782D996C2D11360F008BB1A7 /* DRxEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99432D11360E008BB1A7 /* DRxEmptyView.swift */; };
+		782D996D2D11360F008BB1A7 /* DRxProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99442D11360E008BB1A7 /* DRxProtocols.swift */; };
+		782D996E2D11360F008BB1A7 /* DRxSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99452D11360E008BB1A7 /* DRxSupplementaryView.swift */; };
+		782D996F2D11360F008BB1A7 /* DRxTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99462D11360E008BB1A7 /* DRxTableView.swift */; };
+		782D99702D11360F008BB1A7 /* DRxTableView+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99472D11360E008BB1A7 /* DRxTableView+Rx.swift */; };
+		782D99712D11360F008BB1A7 /* DRxTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99482D11360E008BB1A7 /* DRxTypes.swift */; };
+		782D99722D11360F008BB1A7 /* DRxConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D994A2D11360E008BB1A7 /* DRxConstants.swift */; };
+		782D99732D11360F008BB1A7 /* DRxExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D994B2D11360E008BB1A7 /* DRxExtensions.swift */; };
+		782D99742D11360F008BB1A7 /* DRxHeightCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D994C2D11360E008BB1A7 /* DRxHeightCache.swift */; };
+		782D99752D11360F008BB1A7 /* todo.md in Resources */ = {isa = PBXBuildFile; fileRef = 782D994E2D11360E008BB1A7 /* todo.md */; };
+		782D99762D11360F008BB1A7 /* NewsActionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99502D11360E008BB1A7 /* NewsActionCell.swift */; };
+		782D99772D11360F008BB1A7 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99512D11360E008BB1A7 /* NewsCell.swift */; };
+		782D99782D11360F008BB1A7 /* NewsImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99522D11360E008BB1A7 /* NewsImageCell.swift */; };
+		782D99792D11360F008BB1A7 /* NewsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99532D11360E008BB1A7 /* NewsListViewController.swift */; };
+		782D997A2D11360F008BB1A7 /* NewsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99542D11360E008BB1A7 /* NewsListViewModel.swift */; };
+		782D997B2D11360F008BB1A7 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99552D11360E008BB1A7 /* NewsModel.swift */; };
+		782D997C2D11360F008BB1A7 /* NewsNestedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99562D11360E008BB1A7 /* NewsNestedCell.swift */; };
+		782D997D2D11360F008BB1A7 /* NewsSubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99572D11360E008BB1A7 /* NewsSubCell.swift */; };
+		782D997E2D11360F008BB1A7 /* NewsSubModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99582D11360E008BB1A7 /* NewsSubModel.swift */; };
+		782D997F2D11360F008BB1A7 /* NewsTextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99592D11360E008BB1A7 /* NewsTextInputCell.swift */; };
+		782D99802D11360F008BB1A7 /* UIView+Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D995C2D11360E008BB1A7 /* UIView+Toast.swift */; };
+		782D99812D11360F008BB1A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D995E2D11360E008BB1A7 /* AppDelegate.swift */; };
+		782D99822D11360F008BB1A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D995F2D11360E008BB1A7 /* SceneDelegate.swift */; };
+		782D99832D11360F008BB1A7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782D99602D11360E008BB1A7 /* ViewController.swift */; };
+		782D99842D11360F008BB1A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 782D99622D11360E008BB1A7 /* Assets.xcassets */; };
+		782D99862D11360F008BB1A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 782D99652D11360E008BB1A7 /* LaunchScreen.storyboard */; };
+		782D99872D11360F008BB1A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 782D99672D11360E008BB1A7 /* Main.storyboard */; };
 		CBBEE78B9B3A5C4C500C82CD /* Pods_RACTableView_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E17F253328A51DCDC9D86B8 /* Pods_RACTableView_Swift.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,24 +44,37 @@
 		4B5D20640FFD189DB2199BBA /* Pods-RACTableView-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RACTableView-Swift.release.xcconfig"; path = "Target Support Files/Pods-RACTableView-Swift/Pods-RACTableView-Swift.release.xcconfig"; sourceTree = "<group>"; };
 		6E17F253328A51DCDC9D86B8 /* Pods_RACTableView_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RACTableView_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		780EFDFD2D0C10BB00537240 /* RACTableView-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RACTableView-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		78DE7FE52D0C42D500DADB7E /* DRxBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxBaseCell.swift; sourceTree = "<group>"; };
-		78DE7FE62D0C42D500DADB7E /* DRxBaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxBaseModel.swift; sourceTree = "<group>"; };
-		78DE7FE72D0C42D500DADB7E /* DRxDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxDataSource.swift; sourceTree = "<group>"; };
-		78DE7FE82D0C42D500DADB7E /* DRxEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxEmptyView.swift; sourceTree = "<group>"; };
-		78DE7FE92D0C42D500DADB7E /* DRxProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxProtocols.swift; sourceTree = "<group>"; };
-		78DE7FEA2D0C42D500DADB7E /* DRxSupplementaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxSupplementaryView.swift; sourceTree = "<group>"; };
-		78DE7FEB2D0C42D500DADB7E /* DRxTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxTableView.swift; sourceTree = "<group>"; };
-		78DE7FED2D0C42D500DADB7E /* DRxAnimationConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxAnimationConfig.swift; sourceTree = "<group>"; };
-		78DE7FEE2D0C42D500DADB7E /* DRxConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxConstants.swift; sourceTree = "<group>"; };
-		78DE7FEF2D0C42D500DADB7E /* DRxExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxExtensions.swift; sourceTree = "<group>"; };
-		78DE7FF02D0C42D500DADB7E /* DRxHeightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxHeightCache.swift; sourceTree = "<group>"; };
-		78DE7FF32D0C42D500DADB7E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		78DE7FF42D0C42D500DADB7E /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		78DE7FF52D0C42D500DADB7E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		78DE7FF72D0C42D500DADB7E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		78DE7FF82D0C42D500DADB7E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		78DE7FF92D0C42D500DADB7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		78DE7FFB2D0C42D500DADB7E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		782D99402D11360E008BB1A7 /* DRxBaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxBaseCell.swift; sourceTree = "<group>"; };
+		782D99412D11360E008BB1A7 /* DRxBaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxBaseModel.swift; sourceTree = "<group>"; };
+		782D99422D11360E008BB1A7 /* DRxDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxDataSource.swift; sourceTree = "<group>"; };
+		782D99432D11360E008BB1A7 /* DRxEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxEmptyView.swift; sourceTree = "<group>"; };
+		782D99442D11360E008BB1A7 /* DRxProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxProtocols.swift; sourceTree = "<group>"; };
+		782D99452D11360E008BB1A7 /* DRxSupplementaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxSupplementaryView.swift; sourceTree = "<group>"; };
+		782D99462D11360E008BB1A7 /* DRxTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxTableView.swift; sourceTree = "<group>"; };
+		782D99472D11360E008BB1A7 /* DRxTableView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DRxTableView+Rx.swift"; sourceTree = "<group>"; };
+		782D99482D11360E008BB1A7 /* DRxTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxTypes.swift; sourceTree = "<group>"; };
+		782D994A2D11360E008BB1A7 /* DRxConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxConstants.swift; sourceTree = "<group>"; };
+		782D994B2D11360E008BB1A7 /* DRxExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxExtensions.swift; sourceTree = "<group>"; };
+		782D994C2D11360E008BB1A7 /* DRxHeightCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DRxHeightCache.swift; sourceTree = "<group>"; };
+		782D994E2D11360E008BB1A7 /* todo.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = todo.md; sourceTree = "<group>"; };
+		782D99502D11360E008BB1A7 /* NewsActionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsActionCell.swift; sourceTree = "<group>"; };
+		782D99512D11360E008BB1A7 /* NewsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
+		782D99522D11360E008BB1A7 /* NewsImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsImageCell.swift; sourceTree = "<group>"; };
+		782D99532D11360E008BB1A7 /* NewsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsListViewController.swift; sourceTree = "<group>"; };
+		782D99542D11360E008BB1A7 /* NewsListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsListViewModel.swift; sourceTree = "<group>"; };
+		782D99552D11360E008BB1A7 /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
+		782D99562D11360E008BB1A7 /* NewsNestedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsNestedCell.swift; sourceTree = "<group>"; };
+		782D99572D11360E008BB1A7 /* NewsSubCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsSubCell.swift; sourceTree = "<group>"; };
+		782D99582D11360E008BB1A7 /* NewsSubModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsSubModel.swift; sourceTree = "<group>"; };
+		782D99592D11360E008BB1A7 /* NewsTextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTextInputCell.swift; sourceTree = "<group>"; };
+		782D995C2D11360E008BB1A7 /* UIView+Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Toast.swift"; sourceTree = "<group>"; };
+		782D995E2D11360E008BB1A7 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		782D995F2D11360E008BB1A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		782D99602D11360E008BB1A7 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		782D99622D11360E008BB1A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		782D99632D11360E008BB1A7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		782D99642D11360E008BB1A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		782D99662D11360E008BB1A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EC018F36AAD19AF9D19D0B11 /* Pods-RACTableView-Swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RACTableView-Swift.debug.xcconfig"; path = "Target Support Files/Pods-RACTableView-Swift/Pods-RACTableView-Swift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,7 +102,7 @@
 		780EFDF42D0C10BB00537240 = {
 			isa = PBXGroup;
 			children = (
-				78DE7FFD2D0C42D500DADB7E /* RACTableView-Swift */,
+				782D99682D11360E008BB1A7 /* RACTableView-Swift */,
 				780EFDFE2D0C10BB00537240 /* Products */,
 				2C9B6A8C79869DB3283702FB /* Pods */,
 				F78F465B6C67A763B2BD118E /* Frameworks */,
@@ -91,59 +117,96 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		78DE7FEC2D0C42D500DADB7E /* Core */ = {
+		782D99492D11360E008BB1A7 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				78DE7FE52D0C42D500DADB7E /* DRxBaseCell.swift */,
-				78DE7FE62D0C42D500DADB7E /* DRxBaseModel.swift */,
-				78DE7FE72D0C42D500DADB7E /* DRxDataSource.swift */,
-				78DE7FE82D0C42D500DADB7E /* DRxEmptyView.swift */,
-				78DE7FE92D0C42D500DADB7E /* DRxProtocols.swift */,
-				78DE7FEA2D0C42D500DADB7E /* DRxSupplementaryView.swift */,
-				78DE7FEB2D0C42D500DADB7E /* DRxTableView.swift */,
+				782D99402D11360E008BB1A7 /* DRxBaseCell.swift */,
+				782D99412D11360E008BB1A7 /* DRxBaseModel.swift */,
+				782D99422D11360E008BB1A7 /* DRxDataSource.swift */,
+				782D99432D11360E008BB1A7 /* DRxEmptyView.swift */,
+				782D99442D11360E008BB1A7 /* DRxProtocols.swift */,
+				782D99452D11360E008BB1A7 /* DRxSupplementaryView.swift */,
+				782D99462D11360E008BB1A7 /* DRxTableView.swift */,
+				782D99472D11360E008BB1A7 /* DRxTableView+Rx.swift */,
+				782D99482D11360E008BB1A7 /* DRxTypes.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
 		};
-		78DE7FF12D0C42D500DADB7E /* Utils */ = {
+		782D994D2D11360E008BB1A7 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				78DE7FED2D0C42D500DADB7E /* DRxAnimationConfig.swift */,
-				78DE7FEE2D0C42D500DADB7E /* DRxConstants.swift */,
-				78DE7FEF2D0C42D500DADB7E /* DRxExtensions.swift */,
-				78DE7FF02D0C42D500DADB7E /* DRxHeightCache.swift */,
+				782D994A2D11360E008BB1A7 /* DRxConstants.swift */,
+				782D994B2D11360E008BB1A7 /* DRxExtensions.swift */,
+				782D994C2D11360E008BB1A7 /* DRxHeightCache.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		78DE7FF22D0C42D500DADB7E /* DRxTableView */ = {
+		782D994F2D11360E008BB1A7 /* DRxTableView */ = {
 			isa = PBXGroup;
 			children = (
-				78DE7FEC2D0C42D500DADB7E /* Core */,
-				78DE7FF12D0C42D500DADB7E /* Utils */,
+				782D99492D11360E008BB1A7 /* Core */,
+				782D994D2D11360E008BB1A7 /* Utils */,
+				782D994E2D11360E008BB1A7 /* todo.md */,
 			);
 			path = DRxTableView;
 			sourceTree = "<group>";
 		};
-		78DE7FF62D0C42D500DADB7E /* RACTableView-Swift */ = {
+		782D995A2D11360E008BB1A7 /* NewsDemo */ = {
 			isa = PBXGroup;
 			children = (
-				78DE7FF32D0C42D500DADB7E /* AppDelegate.swift */,
-				78DE7FF42D0C42D500DADB7E /* SceneDelegate.swift */,
-				78DE7FF52D0C42D500DADB7E /* ViewController.swift */,
+				782D99502D11360E008BB1A7 /* NewsActionCell.swift */,
+				782D99512D11360E008BB1A7 /* NewsCell.swift */,
+				782D99522D11360E008BB1A7 /* NewsImageCell.swift */,
+				782D99532D11360E008BB1A7 /* NewsListViewController.swift */,
+				782D99542D11360E008BB1A7 /* NewsListViewModel.swift */,
+				782D99552D11360E008BB1A7 /* NewsModel.swift */,
+				782D99562D11360E008BB1A7 /* NewsNestedCell.swift */,
+				782D99572D11360E008BB1A7 /* NewsSubCell.swift */,
+				782D99582D11360E008BB1A7 /* NewsSubModel.swift */,
+				782D99592D11360E008BB1A7 /* NewsTextInputCell.swift */,
+			);
+			path = NewsDemo;
+			sourceTree = "<group>";
+		};
+		782D995B2D11360E008BB1A7 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				782D995A2D11360E008BB1A7 /* NewsDemo */,
+			);
+			path = Examples;
+			sourceTree = "<group>";
+		};
+		782D995D2D11360E008BB1A7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				782D995C2D11360E008BB1A7 /* UIView+Toast.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		782D99612D11360E008BB1A7 /* RACTableView-Swift */ = {
+			isa = PBXGroup;
+			children = (
+				782D995E2D11360E008BB1A7 /* AppDelegate.swift */,
+				782D995F2D11360E008BB1A7 /* SceneDelegate.swift */,
+				782D99602D11360E008BB1A7 /* ViewController.swift */,
 			);
 			path = "RACTableView-Swift";
 			sourceTree = "<group>";
 		};
-		78DE7FFD2D0C42D500DADB7E /* RACTableView-Swift */ = {
+		782D99682D11360E008BB1A7 /* RACTableView-Swift */ = {
 			isa = PBXGroup;
 			children = (
-				78DE7FF22D0C42D500DADB7E /* DRxTableView */,
-				78DE7FF62D0C42D500DADB7E /* RACTableView-Swift */,
-				78DE7FF72D0C42D500DADB7E /* Assets.xcassets */,
-				78DE7FF82D0C42D500DADB7E /* Info.plist */,
-				78DE7FFA2D0C42D500DADB7E /* LaunchScreen.storyboard */,
-				78DE7FFC2D0C42D500DADB7E /* Main.storyboard */,
+				782D994F2D11360E008BB1A7 /* DRxTableView */,
+				782D995B2D11360E008BB1A7 /* Examples */,
+				782D995D2D11360E008BB1A7 /* Extensions */,
+				782D99612D11360E008BB1A7 /* RACTableView-Swift */,
+				782D99622D11360E008BB1A7 /* Assets.xcassets */,
+				782D99632D11360E008BB1A7 /* Info.plist */,
+				782D99652D11360E008BB1A7 /* LaunchScreen.storyboard */,
+				782D99672D11360E008BB1A7 /* Main.storyboard */,
 			);
 			path = "RACTableView-Swift";
 			sourceTree = "<group>";
@@ -216,9 +279,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78DE800E2D0C42D500DADB7E /* LaunchScreen.storyboard in Resources */,
-				78DE800C2D0C42D500DADB7E /* Assets.xcassets in Resources */,
-				78DE800F2D0C42D500DADB7E /* Main.storyboard in Resources */,
+				782D99842D11360F008BB1A7 /* Assets.xcassets in Resources */,
+				782D99872D11360F008BB1A7 /* Main.storyboard in Resources */,
+				782D99862D11360F008BB1A7 /* LaunchScreen.storyboard in Resources */,
+				782D99752D11360F008BB1A7 /* todo.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,38 +335,50 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78DE80092D0C42D500DADB7E /* AppDelegate.swift in Sources */,
-				78DE80002D0C42D500DADB7E /* DRxDataSource.swift in Sources */,
-				78DE80042D0C42D500DADB7E /* DRxTableView.swift in Sources */,
-				78DE80012D0C42D500DADB7E /* DRxEmptyView.swift in Sources */,
-				78DE800B2D0C42D500DADB7E /* ViewController.swift in Sources */,
-				78DE80062D0C42D500DADB7E /* DRxConstants.swift in Sources */,
-				78DE80082D0C42D500DADB7E /* DRxHeightCache.swift in Sources */,
-				78DE7FFE2D0C42D500DADB7E /* DRxBaseCell.swift in Sources */,
-				78DE80022D0C42D500DADB7E /* DRxProtocols.swift in Sources */,
-				78DE800A2D0C42D500DADB7E /* SceneDelegate.swift in Sources */,
-				78DE80072D0C42D500DADB7E /* DRxExtensions.swift in Sources */,
-				78DE7FFF2D0C42D500DADB7E /* DRxBaseModel.swift in Sources */,
-				78DE80032D0C42D500DADB7E /* DRxSupplementaryView.swift in Sources */,
-				78DE80052D0C42D500DADB7E /* DRxAnimationConfig.swift in Sources */,
+				782D99812D11360F008BB1A7 /* AppDelegate.swift in Sources */,
+				782D99722D11360F008BB1A7 /* DRxConstants.swift in Sources */,
+				782D996B2D11360E008BB1A7 /* DRxDataSource.swift in Sources */,
+				782D997F2D11360F008BB1A7 /* NewsTextInputCell.swift in Sources */,
+				782D99742D11360F008BB1A7 /* DRxHeightCache.swift in Sources */,
+				782D99712D11360F008BB1A7 /* DRxTypes.swift in Sources */,
+				782D996F2D11360F008BB1A7 /* DRxTableView.swift in Sources */,
+				782D99802D11360F008BB1A7 /* UIView+Toast.swift in Sources */,
+				782D99832D11360F008BB1A7 /* ViewController.swift in Sources */,
+				782D997A2D11360F008BB1A7 /* NewsListViewModel.swift in Sources */,
+				782D99782D11360F008BB1A7 /* NewsImageCell.swift in Sources */,
+				782D997E2D11360F008BB1A7 /* NewsSubModel.swift in Sources */,
+				782D996C2D11360F008BB1A7 /* DRxEmptyView.swift in Sources */,
+				782D99732D11360F008BB1A7 /* DRxExtensions.swift in Sources */,
+				782D997C2D11360F008BB1A7 /* NewsNestedCell.swift in Sources */,
+				782D99692D11360E008BB1A7 /* DRxBaseCell.swift in Sources */,
+				782D996D2D11360F008BB1A7 /* DRxProtocols.swift in Sources */,
+				782D99762D11360F008BB1A7 /* NewsActionCell.swift in Sources */,
+				782D997B2D11360F008BB1A7 /* NewsModel.swift in Sources */,
+				782D99772D11360F008BB1A7 /* NewsCell.swift in Sources */,
+				782D997D2D11360F008BB1A7 /* NewsSubCell.swift in Sources */,
+				782D99822D11360F008BB1A7 /* SceneDelegate.swift in Sources */,
+				782D996A2D11360E008BB1A7 /* DRxBaseModel.swift in Sources */,
+				782D99702D11360F008BB1A7 /* DRxTableView+Rx.swift in Sources */,
+				782D996E2D11360F008BB1A7 /* DRxSupplementaryView.swift in Sources */,
+				782D99792D11360F008BB1A7 /* NewsListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		78DE7FFA2D0C42D500DADB7E /* LaunchScreen.storyboard */ = {
+		782D99652D11360E008BB1A7 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				78DE7FF92D0C42D500DADB7E /* Base */,
+				782D99642D11360E008BB1A7 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		78DE7FFC2D0C42D500DADB7E /* Main.storyboard */ = {
+		782D99672D11360E008BB1A7 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				78DE7FFB2D0C42D500DADB7E /* Base */,
+				782D99662D11360E008BB1A7 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -437,6 +513,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 97KXK82D47;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "RACTableView-Swift/Info.plist";
@@ -445,6 +522,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,6 +544,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 97KXK82D47;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "RACTableView-Swift/Info.plist";
@@ -474,6 +553,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

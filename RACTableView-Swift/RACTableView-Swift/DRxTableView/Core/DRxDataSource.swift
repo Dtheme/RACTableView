@@ -41,84 +41,68 @@ public struct SectionModel {
 }
 
 // MARK: - DRxDataSource
-public class DRxDataSource: NSObject {
+public class DRxDataSource: NSObject, UITableViewDataSource {
     
     // MARK: - Properties
     
-    /// TableView 弱引用
-    private weak var tableView: DRxTableView?
-    
-    /// 数据源
+    /// 当前数据源
     private let sectionsRelay = BehaviorRelay<[SectionModel]>(value: [])
     
-    /// 数据源序列
-    public var sections: Observable<[SectionModel]> {
-        return sectionsRelay.asObservable()
-    }
+    /// 弱引用 TableView
+    private weak var tableView: DRxTableView?
     
-    /// 当前数据源值
+    // MARK: - Public Properties
+    
+    /// 当前 sections
     public var currentSections: [SectionModel] {
         return sectionsRelay.value
     }
     
-    /// DisposeBag
-    private let disposeBag = DisposeBag()
+    /// sections 序列
+    public var sections: Observable<[SectionModel]> {
+        return sectionsRelay.asObservable()
+    }
     
-    // MARK: - Init
+    // MARK: - Initialization
     
     public init(tableView: DRxTableView) {
         self.tableView = tableView
         super.init()
-        setupBindings()
     }
     
     // MARK: - Public Methods
     
     /// 更新数据源
-    /// - Parameter sections: 新的数据源
     public func updateData(_ sections: [SectionModel]) {
         sectionsRelay.accept(sections)
+        updateEmptyState()
     }
     
     /// 获取指定位置的模型
-    /// - Parameter indexPath: 索引路径
-    /// - Returns: 模型对象
     public func model(at indexPath: IndexPath) -> DRxModelProtocol? {
-        guard indexPath.section < sectionsRelay.value.count,
-              indexPath.row < sectionsRelay.value[indexPath.section].cells.count else {
+        guard indexPath.section < currentSections.count,
+              indexPath.row < currentSections[indexPath.section].cells.count else {
             return nil
         }
-        return sectionsRelay.value[indexPath.section].cells[indexPath.row]
+        return currentSections[indexPath.section].cells[indexPath.row]
     }
     
     // MARK: - Private Methods
     
-    private func setupBindings() {
-        // 监听数据源变化，自动刷新TableView
-        sectionsRelay
-            .skip(1)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.tableView?.reloadData()
-            })
-            .disposed(by: disposeBag)
+    private func updateEmptyState() {
+        let isEmpty = currentSections.allSatisfy { $0.cells.isEmpty }
+        tableView?.emptyViewState = isEmpty ? .empty(message: "暂无数据") : .none
     }
     
-    private func configureCell<T: DRxCellProtocol>(_ cell: T, with model: DRxModelProtocol) {
-        if let model = model as? T.ModelType {
-            cell.configure(with: model)
-        }
-    }
-}
-
-// MARK: - UITableViewDataSource
-extension DRxDataSource: UITableViewDataSource {
+    // MARK: - UITableViewDataSource
+    
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionsRelay.value.count
+        return currentSections.count
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sectionsRelay.value[section].cells.count
+        guard section < currentSections.count else { return 0 }
+        return currentSections[section].cells.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -126,17 +110,24 @@ extension DRxDataSource: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let config = model.cellConfiguration
-        let identifier = config.identifier
-        
-        // 获取复用的Cell
+        let identifier = model.cellConfiguration.identifier
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
         
-        // 配置Cell
-        if let bindableCell = cell as? any DRxCellProtocol {
-            configureCell(bindableCell, with: model)
+        if let cell = cell as? (any DRxCellProtocol) {
+            configureCell(cell, with: model)
+        }
+        
+        if let tableView = tableView as? DRxTableView {
+            tableView.drxDelegate?.tableView(tableView, didGetCell: cell, at: indexPath)
         }
         
         return cell
+    }
+    
+    private func configureCell<T: DRxCellProtocol>(_ cell: T, with model: DRxModelProtocol) {
+        if let model = model as? T.ModelType {
+            cell.cellModel = model
+            cell.configure(with: model)
+        }
     }
 }

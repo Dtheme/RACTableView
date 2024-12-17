@@ -9,12 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
-
-/// 补充视图类型
-public enum DRxSupplementaryKind {
-    case header
-    case footer
-}
+ 
 
 /// 补充视图协议
 public protocol DRxSupplementaryViewProtocol: AnyObject {

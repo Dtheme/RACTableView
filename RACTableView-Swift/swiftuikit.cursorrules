@@ -1,0 +1,207 @@
+# Swift + UIKit 项目规范
+
+## 项目结构建议
+
+推荐使用 `SnapKit` 管理布局，使用 `RxSwift/Combine` 管理数据流，使用 `RxCocoa` 管理 UI 事件。
+
+按功能模块组织代码，推荐以下结构但不强制：
+
+- **Main Folder**
+  - **ModuleClasses**：业务逻辑按模块组织
+    - **Module**：
+      - `ModuleVC.swift`：处理用户交互和生命周期
+      - `ModuleView.swift`：包含 UI 组件和布局
+      - `ModuleMd.swift`：定义数据结构
+      - `ModuleVM.swift`：处理业务逻辑
+  
+  - **Sources**
+    - **App**：应用入口
+      - `AppDelegate.swift`
+      - `SceneDelegate.swift`
+    
+    - **Shared**：共享组件
+      - **Components**：可重用 UI 组件
+      - **Base**：基础类
+        - `BaseViewController.swift`
+        - `BaseView.swift`
+        - `BaseModel.swift`
+        - `BaseViewModel.swift`
+    
+    - **Services**
+      - **Network**：网络层
+        - `APIService.swift`：API 请求
+        - `NetworkConfig.swift`：网络配置
+      - **Storage**：数据存储
+        - `StorageService.swift`：本地存储
+        - `CacheService.swift`：缓存管理
+    
+    - **Utils**
+      - **Extensions**：扩展方法
+      - **Constants**：常量定义
+      - **Helpers**：工具函数
+    
+  - **Resources**
+    - **Assets**：资源文件
+    - **Localization**：本地化
+    - **Configuration**：配置文件
+
+推荐使用 MVVM 架构，但具体实现方式可根据项目需求调整：
+
+1. **职责划分**
+    - **Model**: 数据结构和业务逻辑
+    - **View**: UI 展示
+    - **ViewModel**: 数据处理和状态管理
+    - **ViewController**: 协调 View 和 ViewModel
+
+2. **数据流管理**
+    - 推荐使用响应式框架 (RxSwift/Combine) 管理数据流
+    - 也可使用闭包、delegate 等其他方式
+    - 选择适合项目的最佳方案
+
+---
+
+## 编码规范
+
+1. **命名规则**
+    - **类名**：大驼峰命名法，如 `UserViewController`
+    - **变量/方法**：小驼峰命名法，如 `userName`、`setupUI()`
+    - **协议**：使用 `-able`、`-ing` 或 描述性词语，如 `Configurable`
+    - **常量**：使用有意义的名称，如 `Constants.Layout.margin`
+    - 见名知意，保持简洁
+
+2. **代码组织**
+    ```swift
+    class SomeViewController: UIViewController {
+        // MARK: - Properties
+        
+        // MARK: - UI Components
+        
+        // MARK: - Lifecycle
+        
+        // MARK: - Setup
+        
+        // MARK: - Actions
+        
+        // MARK: - Helper Methods
+    }
+    ```
+
+3. **文件头注释**
+    ```swift
+    //
+    //  [fileName]
+    //  [projectName]
+    //
+    //  Created by [author] on [date].
+    //  Copyright © [year] [organization]. All rights reserved.
+    //
+    ```
+    - 注意文件头需要引入当前类必须的库。
+    ```swift
+    import Alamofire  // 用于处理网络请求。
+    ```
+
+---
+
+## UI 开发建议
+
+1. **布局方案**
+    - 推荐使用 SnapKit 进行布局
+    - 选择团队最熟悉的方案
+
+2. **复用机制**
+    - 善用 `UITableView/UICollectionView` 的重用机制
+    - 抽取通用组件
+    - 避免代码重复
+
+---
+
+## 性能优化建议
+
+1. **内存管理**
+    - 注意循环引用
+    - 及时释放资源
+
+2. **异步处理**
+    - 耗时操作放在后台线程
+    - 避免主线程阻塞
+
+---
+
+## 测试建议
+
+- 编写单元测试验证核心逻辑
+- UI 测试保证交互流程
+- 根据项目实际情况调整测试策略
+
+---
+
+## 依赖管理
+
+- 使用 CocoaPods 或 SPM
+- 明确依赖版本
+- 及时更新依赖
+
+---
+
+## 细节补充与优化建议
+
+### 项目结构建议
+- **ModuleClasses** 中可以进一步细化模块的职责：
+  - 如果模块比较复杂，可以拆分成更小的子模块。比如一个复杂的“搜索”功能，可以包含 `SearchAPI`、`SearchResultsView`、`SearchViewModel` 等子模块，这样便于团队协作和后期维护。
+  - 在较大的项目中，使用 `Coordinator` 来管理导航逻辑会有助于简化 `ViewController` 的职责，减少复杂度。
+
+- **Services**：
+  - 网络层（`APIService`）可以进一步细分，针对不同的业务需求创建不同的 API 管理类（如 `AuthenticationService`、`UserService` 等）。
+  - 如果使用了多种存储方式（如 CoreData 和 UserDefaults），可以进一步抽象出协议，使用依赖注入进行解耦，增强可扩展性和可测试性。
+
+### 编码规范
+- **命名规则**：
+  - 对于协议的命名，如果是 UI 组件的协议，建议使用 `-Protocol` 后缀，增强清晰度。例如：`ButtonProtocol` 或 `LoadingViewProtocol`。
+  - 对于网络请求的函数，建议使用动词+名词的形式，清晰表达行为。比如：`fetchUserData()`、`uploadProfileImage()`。
+
+- **代码组织**：
+  - 对于大型文件，建议进一步细分并添加更多的 `MARK` 注释，例如：
+    ```swift
+    // MARK: - View Setup
+    // MARK: - Data Binding
+    // MARK: - Networking
+    ```
+
+### UI 开发建议
+- **SnapKit 使用建议**：
+  - 在 `SnapKit` 布局中，可以遵循一定的规则，例如：
+    - 避免过度嵌套布局，保持布局的简洁性。
+    - `SnapKit` 可以根据需要使用 `@IBOutlet` 或通过代码动态创建视图，建议统一视图管理方式，减少视图逻辑和布局的耦合。
+
+  - 对于复杂的视图层级，推荐创建自定义的 `UIView` 类来封装布局逻辑，避免在 `ViewController` 中包含过多布局代码，保持清晰的职责分离。
+
+- **复用机制**：
+  - 对于自定义 `TableViewCell` 或 `CollectionViewCell`，建议使用 `register` 注册并管理重用标识符，减少视图的重复创建。
+  - 避免不必要的视图重绘，例如，可以使用 `shouldInvalidateLayout` 和 `invalidateLayoutWithContext` 来控制 `UICollectionView` 和 `UITableView` 的重绘。
+
+### 性能优化建议
+- **内存管理**：
+  - 在使用闭包时，确保合理使用 `[weak self]` 或 `[unowned self]` 来避免循环引用，尤其是在网络请求或异步操作中。
+  - 对于图片缓存等资源，建议使用第三方库（如 `SDWebImage`）来管理缓存，避免手动管理缓存的复杂度。
+
+- **异步处理**：
+  - 异步操作应该使用 `DispatchQueue` 或 `async/await` 来实现后台操作，并确保 UI 更新在主线程上进行。
+  - 对于大量数据的异步加载，可以使用分页加载或懒加载来优化内存和响应速度。
+
+### 测试建议
+- **单元测试**：
+  - 对于 ViewModel 的测试，可以考虑使用 **Mockito** 或类似的库来模拟 API 请求和数据流，从而独立测试 ViewModel 的逻辑。
+  - 保证单元测试覆盖常见的边界条件和失败场景，例如空数据、网络请求失败等。
+
+- **UI 测试**：
+  - 使用 `XCUIElement` 来模拟用户操作，并验证界面的交互逻辑。对一些复杂的用户交互，最好进行完整的 UI 测试覆盖。
+  - 在 UI 测试中，尽量模拟用户的各种操作路径，并验证每个操作是否按预期工作。
+
+### 依赖管理
+- **CocoaPods 或 SPM**：
+  - 选择依赖管理工具时，推荐使用 `CocoaPods` 时要特别注意 Podfile 中的版本管理，以避免出现冲突。
+  - 对于轻量级的库，考虑使用 `SPM`，尤其是在 Swift 项目中，`SPM` 与 Swift 更为兼容，且不依赖额外的工具。
+
+ 
+附加：遇到本规则未提及的场景，请参考swift官方编码规范或一般项目规范处理。

@@ -11,4 +11,5 @@ target 'RACTableView-Swift' do
   pod 'SnapKit', '~> 5.6'
   # 图片加载
   pod 'Kingfisher'
-end 
+  pod 'IQKeyboardManager'
+end

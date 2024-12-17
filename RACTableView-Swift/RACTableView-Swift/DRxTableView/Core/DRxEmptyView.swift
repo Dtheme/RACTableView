@@ -8,14 +8,6 @@
 
 import UIKit
 
-/// 空视图状态
-public enum DRxEmptyViewState {
-    case empty(String?)
-    case error(Error)
-    case loading
-    case none
-}
-
 /// 空视图协议
 public protocol DRxEmptyViewProtocol: UIView {
     /// 更新状态
@@ -24,30 +16,33 @@ public protocol DRxEmptyViewProtocol: UIView {
 
 /// 默认空视图
 open class DRxEmptyView: UIView, DRxEmptyViewProtocol {
-    // MARK: - UI Elements
+    // MARK: - UI Components
     
-    private let stackView: UIStackView = {
+    private lazy var stackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = 8
         stack.alignment = .center
+        stack.spacing = 12
+        stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
-    private let imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .gray
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
     }()
     
-    private let activityIndicator: UIActivityIndicatorView = {
+    private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .medium)
         indicator.hidesWhenStopped = true
         return indicator
@@ -68,12 +63,13 @@ open class DRxEmptyView: UIView, DRxEmptyViewProtocol {
     // MARK: - Setup
     
     private func setupUI() {
+        backgroundColor = .clear
+        
         addSubview(stackView)
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(activityIndicator)
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -86,25 +82,27 @@ open class DRxEmptyView: UIView, DRxEmptyViewProtocol {
     
     open func update(state: DRxEmptyViewState) {
         switch state {
-        case .empty(let message):
-            imageView.image = UIImage(named: "empty_placeholder")
-            titleLabel.text = message ?? "暂无数据"
+        case .none:
+            isHidden = true
             activityIndicator.stopAnimating()
             
-        case .error(let error):
-            imageView.image = UIImage(named: "error_placeholder")
-            titleLabel.text = error.localizedDescription
+        case .empty(let message):
+            isHidden = false
             activityIndicator.stopAnimating()
+            imageView.image = UIImage(systemName: "doc.text.magnifyingglass")
+            titleLabel.text = message ?? "暂无数据"
             
         case .loading:
+            isHidden = false
+            activityIndicator.startAnimating()
             imageView.image = nil
             titleLabel.text = "加载中..."
-            activityIndicator.startAnimating()
             
-        case .none:
-            imageView.image = nil
-            titleLabel.text = nil
+        case .error(let message):
+            isHidden = false
             activityIndicator.stopAnimating()
+            imageView.image = UIImage(systemName: "exclamationmark.triangle")
+            titleLabel.text = message ?? "加载失败"
         }
     }
 } 

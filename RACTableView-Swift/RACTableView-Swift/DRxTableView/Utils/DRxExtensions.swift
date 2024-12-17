@@ -17,7 +17,15 @@ public extension Reactive where Base: UITableView {
     /// - Parameter sections: 数据源序列
     /// - Returns: Disposable
     func items(sections: Observable<[SectionModel]>) -> Disposable {
-        return items(sections: sections, animation: .none)
+        guard let tableView = base as? DRxTableView else {
+            return Disposables.create()
+        }
+        
+        return sections
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { sections in
+                tableView.updateData(sections)
+            })
     }
     
     /// 监听滚动到底部事件
@@ -33,23 +41,6 @@ public extension Reactive where Base: UITableView {
             .distinctUntilChanged()
             .filter { $0 }
             .map { _ in () }
-    }
-    
-    /// 使用动画绑定数据源
-    /// - Parameters:
-    ///   - sections: 数据源序列
-    ///   - animation: 动画配置
-    /// - Returns: Disposable
-    func items(sections: Observable<[SectionModel]>, animation: DRxAnimationConfig) -> Disposable {
-        guard let tableView = base as? DRxTableView else {
-            return Disposables.create()
-        }
-        
-        return sections
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { sections in
-                tableView.updateData(sections, animation: animation)
-            })
     }
 }
 

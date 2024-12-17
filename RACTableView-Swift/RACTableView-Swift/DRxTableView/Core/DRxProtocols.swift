@@ -2,30 +2,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-// MARK: - Cell 配置协议
-public protocol DRxCellProtocol: AnyObject {
-    associatedtype ModelType: DRxModelProtocol
-    
-    /// Cell的数据模型
-    var cellModel: ModelType? { get set }
-    
-    /// 用于存储RxSwift订阅的DisposeBag
-    var disposeBag: DisposeBag { get }
-    
-    /// 配置Cell
-    func configure(with model: ModelType)
-    
-    /// 绑定数据
-    func bindData()
-}
-
 // MARK: - 模型配置协议
 public protocol DRxModelProtocol: AnyObject {
     /// 模型唯一标识符
     var identifier: String { get }
-    
-    /// 模型关联数据
-    var data: Any? { get }
     
     /// Cell 配置信息
     var cellConfiguration: CellConfiguration { get }
@@ -50,6 +30,23 @@ public protocol DRxModelProtocol: AnyObject {
     
     /// 模型代理
     var delegate: DRxModelDelegate? { get set }
+}
+
+// MARK: - Cell 配置协议
+public protocol DRxCellProtocol: AnyObject {
+    associatedtype ModelType: DRxModelProtocol
+    
+    /// Cell的数据模型
+    var cellModel: ModelType? { get set }
+    
+    /// 用于存储RxSwift订阅的DisposeBag
+    var disposeBag: DisposeBag { get }
+    
+    /// 配置Cell
+    func configure(with model: ModelType)
+    
+    /// 绑定数据
+    func bindData()
 }
 
 // MARK: - Cell 配置信息
@@ -77,6 +74,18 @@ public struct CellConfiguration {
         self.identifier = identifier ?? UUID().uuidString
         self.automaticHeight = automaticHeight
         self.defaultHeight = defaultHeight
+    }
+    public init(
+        cellClass: AnyClass? = nil,
+        cellNib: UINib? = nil,
+        identifier: String? = nil,
+        automaticHeight: Bool = false
+    ) {
+        self.cellClass = cellClass
+        self.cellNib = cellNib
+        self.identifier = identifier ?? UUID().uuidString
+        self.automaticHeight = automaticHeight
+        self.defaultHeight = 44
     }
 }
 
@@ -112,18 +121,25 @@ public struct SupplementaryConfiguration {
 public protocol DRxTableViewDelegate: AnyObject {
     /// Cell实例回调
     func tableView(_ tableView: UITableView, didGetCell cell: UITableViewCell, at indexPath: IndexPath)
-    
+
     /// Header实例回调
     func tableView(_ tableView: UITableView, didGetHeaderView view: UIView, in section: Int)
-    
+
     /// Footer实例回调
     func tableView(_ tableView: UITableView, didGetFooterView view: UIView, in section: Int)
+}
+
+// MARK: - 模型代理协议
+public protocol DRxModelDelegate: AnyObject {
+    /// 模型高度更新回调
+    func modelDidUpdateHeight(_ model: DRxModelProtocol, animated: Bool)
+    func reloadCells(rows: [IndexPath],animated: Bool)
+//    public func reloadCells(rows: [IndexPath] = [],animated: Bool) {
 }
 
 // MARK: - 默认实现
 public extension DRxModelProtocol {
     var identifier: String { String(describing: type(of: self)) }
-    var data: Any? { nil }
     var isExpanded: BehaviorRelay<Bool> { .init(value: true) }
     var cellHeight: BehaviorRelay<CGFloat> { .init(value: DRxConstants.Height.defaultCell) }
     
@@ -134,18 +150,16 @@ public extension DRxModelProtocol {
         cellHeight.accept(height)
         delegate?.modelDidUpdateHeight(self, animated: animated)
     }
+    func updateTableV(rows: [IndexPath] = [], animated: Bool = true) {
+        delegate?.reloadCells(rows: rows, animated: true)
+
+    }
 }
 
 public extension DRxCellProtocol {
     var disposeBag: DisposeBag { DisposeBag() }
     
     func bindData() {
-        // 默认现为空
+        // 默认为空
     }
-}
-
-/// 模型代理协议
-public protocol DRxModelDelegate: AnyObject {
-    /// 模型高度更新回调
-    func modelDidUpdateHeight(_ model: DRxModelProtocol, animated: Bool)
 }
