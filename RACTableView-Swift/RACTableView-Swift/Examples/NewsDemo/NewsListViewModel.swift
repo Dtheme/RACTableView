@@ -21,6 +21,9 @@ class NewsListViewModel: DRxTableViewDelegate {
     /// 加载状态
     private let loadingState = BehaviorRelay<DRxLoadingState>(value: .none)
     
+    private var additionalNewsCount = 0
+    private let maxAdditionalNews = 10
+    
     // MARK: - Outputs
     
     /// 数据源序列
@@ -37,7 +40,6 @@ class NewsListViewModel: DRxTableViewDelegate {
     
     init() {
         print("=== NewsListViewModel init ===")
-        tableView.register(NewsTextInputCell.self, forCellReuseIdentifier: NewsTextInputCell.defaultReuseIdentifier)
         
         // 设置 tableView 属性
         tableView.estimatedRowHeight = 44
@@ -56,27 +58,43 @@ class NewsListViewModel: DRxTableViewDelegate {
                 self?.tableView.updateData(sections)
             })
             .disposed(by: disposeBag)
+        
+        // 绑定下拉刷新
+        tableView.rx.headerRefreshing
+            .subscribe(onNext: { [weak self] in
+                self?.refreshData()
+            })
+            .disposed(by: disposeBag)
+        
+        // 绑定上拉加载
+        tableView.rx.footerRefreshing
+            .subscribe(onNext: { [weak self] in
+                self?.loadMoreData()
+            })
+            .disposed(by: disposeBag)
     }
     
     private func handleNestedCellExpand(_ model: NewsModel) {
         // 切换展开状态
-        let newValue = !model.isExpanded.value
+        model.toggleExpand()
         
         // 计算新的高度
-        let newHeight = model.calculateNestedHeight(isExpanded: newValue)
+        let newHeight = model.calculateNestedHeight(isExpanded: model.isExpanded.value)
         
         // 找到对应的 indexPath
-        if let currentSections = sections.value.first,
-           let rowIndex = currentSections.cells.firstIndex(where: { $0.identifier == model.identifier }) {
-            let indexPath = IndexPath(row: rowIndex, section: 0)
-            
-            // 使用 performBatchUpdates 来同步更新状态和高度
-            tableView.performBatchUpdates({
-                // 更新展开状态
-                model.isExpanded.accept(newValue)
-                // 更新高度
-                model.updateHeight(newHeight, animated: true)
-            })
+        for (sectionIndex, section) in sections.value.enumerated() {
+            if let rowIndex = section.cells.firstIndex(where: { $0.identifier == model.identifier }) {
+                let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
+                
+                // 使用 performBatchUpdates 来同步更新状态和高度
+                tableView.performBatchUpdates({
+                    // 更新高度
+                    model.updateHeight(newHeight, animated: true)
+                }, completion: { _ in
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                })
+                break
+            }
         }
     }
     
@@ -97,7 +115,7 @@ class NewsListViewModel: DRxTableViewDelegate {
                 actionCell.tag = tag
                 print("设置新的 tag: \(tag)")
                 
-                // 清理之前的订阅
+                // 清理当前的订阅
                 actionCellDisposeBag = DisposeBag()
                 
                 // 重新订阅事件
@@ -118,7 +136,7 @@ class NewsListViewModel: DRxTableViewDelegate {
                     .disposed(by: actionCellDisposeBag)  // 使用专门的 DisposeBag
                 
                 // 配置 cell
-                if let model = self.sections.value.first?.cells[indexPath.row] as? NewsModel {
+                if let model = self.sections.value[indexPath.section].cells[indexPath.row] as? NewsModel {
                     print("配置 ActionCell，model identifier: \(model.identifier)")
                     actionCell.configure(with: model)
                 }
@@ -140,10 +158,10 @@ class NewsListViewModel: DRxTableViewDelegate {
         
         // 处理 NewsNestedCell
         if let nestedCell = cell as? NewsNestedCell {
-            // 使用 cell 的 tag 免重复订阅
             let tag = indexPath.section * 1000 + indexPath.row
             if nestedCell.tag != tag {
                 nestedCell.tag = tag
+                nestedCell.configure(with: sections.value[indexPath.section].cells[indexPath.row] as! NewsModel)
                 
                 // 订阅展开/收起事件
                 nestedCell.eventRelay
@@ -162,7 +180,7 @@ class NewsListViewModel: DRxTableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didGetFooterView view: UIView, in section: Int) {
-        // 不需要实现
+        // 不需要现
     }
     
     // MARK: - Private Methods
@@ -170,18 +188,20 @@ class NewsListViewModel: DRxTableViewDelegate {
     /// 加载 mock 数据
     private func loadMockData() {
         // 创建 mock 数据
-        var mockNews = [
+        let mockNews1 = [
             NewsModel(
                 title: "苹果发布 iPhone 15 系列",
                 content: "苹果公司今日发布了全新的 iPhone 15 系列，包括标准版、Plus、Pro 和 Pro Max 四个型号。",
                 imageURL: "https://img1.baidu.com/it/u=550609510,4201580069&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
-                date: Date()
+                date: Date(),
+                delegate: tableView
             ),
             NewsModel(
                 title: "特斯拉推出新款 Model S",
                 content: "特斯拉发布新款 Model S，续航里程突破 600 公里，0-100km/h 加速仅需 2.1 秒。",
                 imageURL: "https://img0.baidu.com/it/u=3350411928,213627080&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
-                date: Date().addingTimeInterval(-3600)
+                date: Date().addingTimeInterval(-3600),
+                delegate: tableView
             ),
             NewsModel(
                 title: "热门科技新闻",
@@ -191,7 +211,7 @@ class NewsListViewModel: DRxTableViewDelegate {
                 cellType: .nested,
                 subItems: [
                     NewsSubItem(
-                        title: "谷歌发布新一代 AI 模型",
+                        title: "谷歌发布 AI 模型",
                         subtitle: "性能提升超过 50%"
                     ),
                     NewsSubItem(
@@ -203,68 +223,87 @@ class NewsListViewModel: DRxTableViewDelegate {
                         subtitle: "全新设计和 AI 助手"
                     )
                 ],
-                isExpanded: false // 默认收起状态
+                isExpanded: false, // 默认收起状态
+                delegate: tableView
             ),
             NewsModel(
                 title: "SpaceX 成功发射星链卫星",
                 content: "SpaceX 今日成功发射新一批星链卫星，进一步扩大全球互联网覆盖范围。",
                 imageURL: "https://img0.baidu.com/it/u=2917508332,2227941891&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
                 date: Date().addingTimeInterval(-10800),
-                cellType: .image
+                cellType: .image,
+                delegate: tableView
             ),
             NewsModel(
                 title: "微软收购动视暴雪完成",
-                content: "微软以 687 亿美收购动视暴雪的交易正式完成，游戏行业格局将发生重大变化。",
+                content: "微软以 687 亿美元收购动视暴雪的交易正式完成，游戏行业格局将发生重大���化。",
                 imageURL: "https://img0.baidu.com/it/u=2917508332,2227941891&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
                 date: Date().addingTimeInterval(-14400),
-                cellType: .image
+                cellType: .image,
+                delegate: tableView
             )
         ]
 
-        // 添加文本输入测试项
-        let textInputNews = NewsModel(
-            title: "请输入文字",
-            content: "",
-            imageURL: "",
-            date: Date(),
-            cellType: .textInput
-        )
-        textInputNews.delegate = tableView
-        mockNews.insert(textInputNews, at: 0)
-
-        // 添加删除按钮
-        let actionNews = NewsModel(
-            title: "",
-            content: "",
-            imageURL: "",
-            date: Date(),
-            cellType: .action
-        )
-        actionNews.delegate = tableView
-        
-        // 确保数组长度足够
-        while mockNews.count < 5 {
-            mockNews.append(NewsModel(
-                title: "占位新闻",
-                content: "这是一条占位新闻。",
+        let mockNews2 = [
+            NewsModel(
+                title: "入文字",
+                content: "",
                 imageURL: "",
-                date: Date()
-            ))
-        }
-        
-        // 在5个位置插入 ActionCell
-        mockNews.insert(actionNews, at: 5)
+                date: Date(),
+                cellType: .textInput,
+                delegate: tableView
+            ),
+            NewsModel(
+                title: "",
+                content: "",
+                imageURL: "",
+                date: Date(),
+                cellType: .action,
+                delegate: tableView
+            ),
+            NewsModel(
+                title: "更多科技新闻",
+                content: "",
+                imageURL: "",
+                date: Date().addingTimeInterval(-7200),
+                cellType: .nested,
+                subItems: [
+                    NewsSubItem(
+                        title: "苹果发布新款 MacBook",
+                        subtitle: "性能提升显著"
+                    ),
+                    NewsSubItem(
+                        title: "亚马逊推出新服务",
+                        subtitle: "Prime 会员专享"
+                    ),
+                    NewsSubItem(
+                        title: "特斯拉发布新电池技术",
+                        subtitle: "续航里程大幅提升"
+                    )
+                ],
+                isExpanded: false, // 默认收起状态
+                delegate: tableView
+            )
+        ]
 
-        // 为所有模型设置代理
-        mockNews.forEach { model in
-            model.delegate = tableView
-        }
-        
         // 创建 section
-        let section = SectionModel(identifier: "news", cells: mockNews)
-        sections.accept([section])
+        let section1 = SectionModel(
+            identifier: "news1",
+            header: HeaderViewModel(title: "科技新闻"),
+            cells: mockNews1,
+            footer: FooterViewModel(),
+            type: "default"
+        )
         
-        print("TextInputNews delegate: \(String(describing: textInputNews.delegate))")
+        let section2 = SectionModel(
+            identifier: "news2",
+            header: HeaderViewModel(title: "其他新闻"),
+            cells: mockNews2,
+            footer: FooterViewModel(),
+            type: "default"
+        )
+        
+        sections.accept([section1, section2])
     }
     
     // 添加常量定义
@@ -283,10 +322,10 @@ class NewsListViewModel: DRxTableViewDelegate {
         }.count
     }
     
-    // 处理删除事件
+    // 理删除事件
     private func handleDeleteAction(_ model: NewsModel) {
         print("开始处理删除事件")
-        if var currentSections = sections.value.first {
+        if var currentSections = sections.value.last {
             let currentImageCells = countImageCells(in: currentSections.cells)
             print("当前图片 cell 数量: \(currentImageCells)")
             
@@ -296,7 +335,7 @@ class NewsListViewModel: DRxTableViewDelegate {
                 return
             }
             
-            // 从后往前找第一个图片 cell
+            // 从后往前找最后一个图片 cell
             if let lastImageIndex = currentSections.cells.indices.reversed().first(where: { index in
                 if let newsModel = currentSections.cells[index] as? NewsModel {
                     return newsModel.cellType == .image
@@ -304,14 +343,21 @@ class NewsListViewModel: DRxTableViewDelegate {
                 return false
             }) {
                 print("找到要删除的图片 cell，index: \(lastImageIndex)")
+                
+                // 删除数据源中的 cell
                 currentSections.cells.remove(at: lastImageIndex)
                 
-                // 更新数据源并刷新 tableView
-                sections.accept([currentSections])
+                // 更新数据源
+                var updatedSections = sections.value
+                updatedSections[updatedSections.count - 1] = currentSections
+                sections.accept(updatedSections)
                 
+                // 刷新 tableView
                 tableView.performBatchUpdates({
-                    let indexPath = IndexPath(row: lastImageIndex, section: 0)
-                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                    tableView.reloadData()
+                }, completion: { _ in
+                    // 显示 toast 提示
+                    self.tableView.makeToast("已删除 indexPath: \(updatedSections.count - 1)-\(lastImageIndex) 的 cell")
                 })
                 
                 print("删除完成，剩余图片 cell 数量: \(currentImageCells - 1)")
@@ -322,85 +368,88 @@ class NewsListViewModel: DRxTableViewDelegate {
     // 处理添加图片事件
     private func handleAddImageAction(_ model: NewsModel) {
         print("开始处理添加事件")
-        if var currentSections = sections.value.first {
+        if var currentSections = sections.value.last {
             let currentImageCells = countImageCells(in: currentSections.cells)
             print("当前图片 cell 数量: \(currentImageCells)")
             
-            if currentImageCells >= Constants.maxImageCells {
+            if currentImageCells >= 3 {
                 print("已达到上限")
-                tableView.makeToast("最多只能添加\(Constants.maxImageCells)个图片")
+                tableView.makeToast("最多只能添加3个图片")
                 return
             }
             
-            // 创建新的图片 cell
+            // 创建新的图片新闻模型
             let newImageModel = NewsModel(
                 title: "新增的图片新闻 \(currentImageCells + 1)",  // 添加序号
-                content: "这是一个新增的图片新闻示例。",
+                content: "这是一新增的图片新闻示例。",
                 imageURL: "https://img0.baidu.com/it/u=2917508332,2227941891&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
                 date: Date(),
-                cellType: .image
+                cellType: .image,
+                delegate: tableView
             )
-            newImageModel.delegate = tableView
-            
-            // 添加到数组末尾
+
+            // 插入到 cells 中
             currentSections.cells.append(newImageModel)
             
-            // 更新数据源并刷新 tableView
-            sections.accept([currentSections])
+            // 更新数据源
+            var updatedSections = sections.value
+            updatedSections[updatedSections.count - 1] = currentSections
+            sections.accept(updatedSections)
             
-            // 使用 performBatchUpdates 刷新
-            let newIndex = currentSections.cells.count - 1
+            // 刷新 tableView
             tableView.performBatchUpdates({
-                let indexPath = IndexPath(row: newIndex, section: 0)
-                tableView.insertRows(at: [indexPath], with: .automatic)
-            }) { [weak self] _ in
-                // 滚动到新添加的 cell
-                let indexPath = IndexPath(row: newIndex, section: 0)
-                self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-            }
+                tableView.reloadData()
+            }, completion: nil)
             
             print("添加完成，当前图片 cell 数量: \(currentImageCells + 1)")
         }
     }
     
-    // 处理在当前位置插入图片
-    private func handleInsertImageAction(_ model: NewsModel) {
-        if var currentSections = sections.value.first {
-            if let index = currentSections.cells.firstIndex(where: { $0.identifier == model.identifier }) {
-                let newImageModel = NewsModel(
-                    title: "插入的图片新闻",
-                    content: "这是一个插入的图片新闻示例。",
-                    imageURL: "https://img0.baidu.com/it/u=2917508332,2227941891&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
-                    date: Date(),
-                    cellType: .image
-                )
-                newImageModel.delegate = tableView
-                currentSections.cells.insert(newImageModel, at: index)
-                sections.accept([currentSections])
-            }
-        }
+    private func refreshData() {
+        // 重置页面数据
+        loadMockData()
+        tableView.endHeaderRefreshing()
     }
     
-    // 处理移动 cell
-    private func handleMoveCellAction(_ model: NewsModel) {
-        if var currentSections = sections.value.first {
-            if let index = currentSections.cells.firstIndex(where: { $0.identifier == model.identifier }) {
-                // 找到一个图片 cell
-                if let imageIndex = currentSections.cells.firstIndex(where: { 
-                    if let newsModel = $0 as? NewsModel {
-                        return newsModel.cellType == .image
-                    }
-                    return false
-                }) {
-                    // 交换位置
-                    let temp = currentSections.cells[imageIndex]
-                    currentSections.cells[imageIndex] = currentSections.cells[index]
-                    currentSections.cells[index] = temp
-                    sections.accept([currentSections])
-                } else {
-                    tableView.makeToast("没有可移动的图片Cell")
-                }
-            }
+    private func loadMoreData() {
+        guard additionalNewsCount < maxAdditionalNews else {
+            tableView.makeToast("没有更多数据")
+            tableView.noMoreData()
+            return
         }
+
+        // 创建新的新闻模型
+        let newNewsModel = NewsModel(
+            title: "新增的新闻 \(additionalNewsCount + 1)",
+            content: "这是新增的新闻示例。",
+            imageURL: "https://img0.baidu.com/it/u=2917508332,2227941891&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500",
+            date: Date(),
+            cellType: .image,
+            delegate: tableView
+        )
+
+        // 创建新的 section
+        let newSection = SectionModel(
+            identifier: "newSection\(additionalNewsCount)",
+            header: HeaderViewModel(title: "新增新闻"),
+            cells: [newNewsModel],
+            footer: FooterViewModel(),
+            type: "default"
+        )
+
+        // 更新数据源
+        var currentSections = sections.value
+        currentSections.append(newSection)
+        
+        // 刷新 tableView
+        tableView.performBatchUpdates({
+            sections.accept(currentSections) // 确保在插入 section 之前更新数据源
+            let newSectionIndex = currentSections.count - 1
+            tableView.insertSections(IndexSet(integer: newSectionIndex), with: .automatic)
+        }, completion: { _ in
+            self.tableView.endFooterRefreshing() // 确保结束刷新动画
+        })
+
+        additionalNewsCount += 1
     }
 } 

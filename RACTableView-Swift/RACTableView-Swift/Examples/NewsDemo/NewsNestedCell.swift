@@ -33,7 +33,7 @@ class NewsNestedCell: UITableViewCell, DRxCellProtocol {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 8
-        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowColor = UIColor.black.cgColor  
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
         view.layer.shadowRadius = 4
         view.layer.shadowOpacity = 0.1
@@ -62,18 +62,22 @@ class NewsNestedCell: UITableViewCell, DRxCellProtocol {
         return imageView
     }()
     
+    private lazy var headerButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .clear // 设置为透明
+        return button
+    }()
+    
     // MARK: - Initialization
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
-        setupGestures()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupUI()
-        setupGestures()
     }
     
     // MARK: - Setup
@@ -87,7 +91,11 @@ class NewsNestedCell: UITableViewCell, DRxCellProtocol {
         containerView.addSubview(headerView)
         headerView.addSubview(titleLabel)
         headerView.addSubview(arrowImageView)
+        headerView.addSubview(headerButton) // 添加按钮到 headerView
         containerView.addSubview(nestedTableView)
+        
+        // 注册 SubItemCell
+        nestedTableView.register(UITableViewCell.self, forCellReuseIdentifier: "SubItemCell")
         
         // 设置约束
         containerView.snp.makeConstraints { make in
@@ -111,24 +119,18 @@ class NewsNestedCell: UITableViewCell, DRxCellProtocol {
             make.width.height.equalTo(20)
         }
         
+        headerButton.snp.makeConstraints { make in
+            make.edges.equalToSuperview() // 覆盖整个 headerView
+        }
+        
         nestedTableView.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom)
             make.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
         
-        // 添加点击手势
-        setupGestures()
-    }
-    
-    private func setupGestures() {
-        // 移除旧的手势识别器
-        headerView.gestureRecognizers?.forEach { headerView.removeGestureRecognizer($0) }
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(headerTapped))
-        tapGesture.cancelsTouchesInView = false
-        headerView.addGestureRecognizer(tapGesture)
-        headerView.isUserInteractionEnabled = true
+        // 绑定按钮点击事件
+        headerButton.addTarget(self, action: #selector(headerTapped), for: .touchUpInside)
     }
     
     // MARK: - Actions
@@ -140,25 +142,18 @@ class NewsNestedCell: UITableViewCell, DRxCellProtocol {
     
     // MARK: - DRxCellProtocol
     
+    private var cellDisposeBag = DisposeBag()
+    
     func configure(with model: NewsModel) {
         cellModel = model
         titleLabel.text = model.title
         
-        // 将子项目转换为 NewsSubModel
-        let subModels = model.subItems.map { item in
-            let subModel = NewsSubModel(title: item.title, subtitle: item.subtitle)
-            subModel.delegate = model.delegate
-            return subModel
-        }
-        
-        // 创建 section
-        let section = SectionModel(identifier: "subItems", cells: subModels)
-        
-        // 更新嵌套列表数据
-        nestedTableView.updateData([section])
-        
         // 更新 UI
         updateUI(with: model)
+        
+        // 设置数据源和代理
+        nestedTableView.dataSource = self
+        nestedTableView.delegate = self
     }
     
     private func updateUI(with model: NewsModel) {
@@ -173,6 +168,7 @@ class NewsNestedCell: UITableViewCell, DRxCellProtocol {
         
         // 如果是展开状态，确保布局正确
         if isExpanded {
+            nestedTableView.reloadData() // 确保子 tableView 数据刷新
             setNeedsLayout()
             layoutIfNeeded()
         }
@@ -184,5 +180,19 @@ class NewsNestedCell: UITableViewCell, DRxCellProtocol {
         // 重置状态
         arrowImageView.transform = .identity  // 改为默认展开状态
         cellModel = nil
+        cellDisposeBag = DisposeBag() // 重置 DisposeBag
+    }
+}
+
+extension NewsNestedCell: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cellModel?.subItems.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SubItemCell", for: indexPath)
+        let subItem = cellModel?.subItems[indexPath.row]
+        cell.textLabel?.text = subItem?.title
+        return cell
     }
 } 

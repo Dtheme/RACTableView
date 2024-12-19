@@ -9,6 +9,8 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import MJRefresh
+
 
 /// DRxTableView 事件类型
 public enum DRxTableViewEvent {
@@ -54,35 +56,27 @@ open class DRxTableView: UITableView {
     /// 已注册的Header/Footer类型
     private var registeredSupplementaryTypes: Set<String> = []
     
-    /// 自定义刷新控件
-    private lazy var drxRefreshControl: UIRefreshControl = {
-        let control = UIRefreshControl()
-        control.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
-        return control
-    }()
-    
-    /// 是否正在加载更多
-    private var isLoadingMore = false
-    
-    /// 刷新回调
-    public var onRefresh: (() -> Void)?
-    
-    /// 加载更多回调
-    public var onLoadMore: (() -> Void)?
-    
     /// 是否启用下拉刷新
     public var enablePullToRefresh: Bool = false {
         didSet {
             if enablePullToRefresh {
-                self.refreshControl = drxRefreshControl
+                self.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(headerRefreshing))
             } else {
-                self.refreshControl = nil
+                self.mj_header = nil
             }
         }
     }
     
     /// 是否启用上拉加载更多
-    public var enableLoadMore: Bool = false
+    public var enableLoadMore: Bool = false {
+        didSet {
+            if enableLoadMore {
+                self.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(footerRefreshing))
+            } else {
+                self.mj_footer = nil
+            }
+        }
+    }
     
     /// 空视图
     private lazy var emptyView: DRxEmptyViewProtocol = DRxEmptyView()
@@ -93,6 +87,9 @@ open class DRxTableView: UITableView {
             updateEmptyViewState()
         }
     }
+    
+    /// 是否正在加载更多
+    private var isLoadingMore = false
     
     // MARK: - Initialization
     
@@ -153,8 +150,8 @@ open class DRxTableView: UITableView {
     
     /// 更新数据源
     public func updateData(_ sections: [SectionModel]) {
-        autoRegisterTypesIfNeeded(sections)
-        _drxDataSource.updateData(sections)
+        autoRegisterIfNeeded(for: sections)
+        drxDataSource.updateData(sections)
     }
     
     /// 获取指定位置的模型
@@ -179,7 +176,8 @@ open class DRxTableView: UITableView {
     
     /// 自动注册Header/Footer视图
     /// - Parameter configuration: 补充视图配置信息
-    private func autoRegisterSupplementaryViewIfNeeded(_ configuration: SupplementaryConfiguration) {
+    private func autoRegisterSupplementaryViewIfNeeded(_ configuration: SupplementaryConfiguration?) {
+        guard let configuration = configuration else { return }
         let identifier = configuration.identifier
         guard !registeredSupplementaryTypes.contains(identifier) else { return }
         
@@ -244,7 +242,7 @@ open class DRxTableView: UITableView {
             let oldCellIds = Set(oldSection.cells.map { $0.identifier })
             let newCellIds = Set(newSection.cells.map { $0.identifier })
             
-            // 除的行
+            // 删除的行
             for (rowIndex, cell) in oldSection.cells.enumerated() {
                 if !newCellIds.contains(cell.identifier) {
                     changes.deletedRows.append(IndexPath(row: rowIndex, section: sectionIndex))
@@ -273,7 +271,7 @@ open class DRxTableView: UITableView {
     /// - Parameters:
     ///   - indexPath: Cell位置
     ///   - height: 新的高度
-    ///   - animated: 是否使用动画
+    ///   - animated: 是否用动画
     public func updateCellHeight(at indexPath: IndexPath, height: CGFloat, animated: Bool = true) {
         guard let model = model(at: indexPath) else { return }
         
@@ -309,57 +307,50 @@ open class DRxTableView: UITableView {
     
     /// 开始下拉刷新
     public func beginHeaderRefreshing() {
-        drxRefreshControl.beginRefreshing()
-        headerRefreshing()
+        self.mj_header?.beginRefreshing()
     }
     
     /// 结束下拉刷新
     public func endHeaderRefreshing() {
-        drxRefreshControl.endRefreshing()
+        self.mj_header?.endRefreshing()
+        UIView.animate(withDuration: 0.25) {
+            self.reloadData()
+        }
     }
     
     /// 开始上拉加载更多
     public func beginFooterRefreshing() {
+        guard !isLoadingMore else { return }
         isLoadingMore = true
-        footerRefreshing()
+        self.mj_footer?.beginRefreshing()
     }
     
     /// 结束上拉加载更多
     public func endFooterRefreshing() {
         isLoadingMore = false
-    }
-    
-    @objc private func handleRefresh() {
-        headerRefreshing()
-    }
-    
-    /// 束刷新
-    public func endRefreshing() {
-        drxRefreshControl.endRefreshing()
-    }
-    
-    /// 结束加载更多
-    public func endLoadingMore() {
-        isLoadingMore = false
-    }
-    
-    // 在 UIScrollViewDelegate 中添加
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // 触发滚动事件
-        eventRelay.accept(.didScroll(scrollView))
-        
-        // 处理上拉加载更多
-        guard enableLoadMore && !isLoadingMore else { return }
-        
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        let frameHeight = scrollView.frame.height
-        
-        if offsetY > contentHeight - frameHeight - DRxConstants.Performance.preloadThreshold {
-            beginFooterRefreshing()
+        self.mj_footer?.endRefreshing()
+        UIView.animate(withDuration: 0.25) {
+            self.reloadData()
         }
     }
     
+    @objc open func headerRefreshing() {
+        // 调用 ViewModel 中的刷新方法
+        self.reloadData()
+    }
+    
+    @objc open func footerRefreshing() {
+        // 调用 ViewModel 中的加载更多方法
+        self.reloadData()
+    }
+    
+    
+    @objc open func noMoreData() {
+        guard let footer = self.mj_footer as? MJRefreshAutoNormalFooter else { return }
+        footer.setTitle("🐳 opps~ Nothing more to load.", for: .noMoreData)
+        footer.endRefreshingWithNoMoreData()
+    }
+
     private func updateEmptyViewState() {
         switch emptyViewState {
         case .none:
@@ -386,15 +377,7 @@ open class DRxTableView: UITableView {
         updateEmptyViewState()
     }
     
-    @objc open func headerRefreshing() {
-        // 子类实现
-    }
-    
-    @objc open func footerRefreshing() {
-        // 子类实现
-    }
-    
-    /// 更新指定模型的Cell高度
+    /// 更新指定模型Cell高度
     public func updateCellHeight(for model: DRxModelProtocol, height: CGFloat, animated: Bool = true) {
         // 查找模型对应的indexPath
         for (sectionIndex, section) in drxDataSource.currentSections.enumerated() {
@@ -413,6 +396,48 @@ open class DRxTableView: UITableView {
             width: bounds.width
         )
         heightCache.setHeight(height, for: cacheKey)
+    }
+    
+    // 注册 cell、header 和 footer 的通用方法
+    func register<T: UITableViewCell>(_ cellClass: T.Type) {
+        self.register(cellClass, forCellReuseIdentifier: String(describing: cellClass))
+    }
+    
+    func register<T: UITableViewHeaderFooterView>(_ viewClass: T.Type) {
+        self.register(viewClass, forHeaderFooterViewReuseIdentifier: String(describing: viewClass))
+    }
+    
+    // 自动注册 cell 和 header/footer
+    private func autoRegisterIfNeeded(for sections: [SectionModel]) {
+        for section in sections {
+            // 注册 cells
+            for cellModel in section.cells {
+                autoRegisterCellIfNeeded(cellModel.cellConfiguration)
+            }
+            
+            // 注册 header
+            if let headerConfig = section.header?.headerConfiguration {
+                autoRegisterSupplementaryViewIfNeeded(headerConfig)
+            }
+            
+            // 注册 footer
+            if let footerConfig = section.footer?.footerConfiguration {
+                autoRegisterSupplementaryViewIfNeeded(footerConfig)
+            }
+        }
+    }
+    
+    private func autoRegisterSupplementaryViewIfNeeded(_ configuration: SupplementaryConfiguration) {
+        let identifier = configuration.identifier
+        guard !registeredSupplementaryTypes.contains(identifier) else { return }
+        
+        if let viewClass = configuration.viewClass {
+            register(viewClass, forHeaderFooterViewReuseIdentifier: identifier)
+        } else if let nib = configuration.viewNib {
+            register(nib, forHeaderFooterViewReuseIdentifier: identifier)
+        }
+        
+        registeredSupplementaryTypes.insert(identifier)
     }
 }
 
@@ -470,53 +495,34 @@ extension DRxTableView: UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // 添加安全检查
         guard section < drxDataSource.currentSections.count,
               let headerModel = drxDataSource.currentSections[section].header,
               let config = headerModel.headerConfiguration else {
             return nil
         }
         
-        let identifier = config.identifier
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier)
-        
-        if let headerView = headerView as? (any DRxSupplementaryViewProtocol) {
-            if let model = headerModel as? any DRxModelProtocol {
-                configureSupplementaryView(headerView, with: model)
-            }
-            if let view = headerView as? UIView {
-                drxDelegate?.tableView(tableView, didGetHeaderView: view, in: section)
-            }
+        if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: config.identifier) as? (any UIView & DRxSupplementaryViewProtocol) {
+            configureSupplementaryView(headerView, with: headerModel)
+            return headerView
         }
-        
-        return headerView
+        return nil
     }
     
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        // 添加安全检查
         guard section < drxDataSource.currentSections.count,
               let footerModel = drxDataSource.currentSections[section].footer,
               let config = footerModel.footerConfiguration else {
             return nil
         }
         
-        let identifier = config.identifier
-        let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier)
-        
-        if let footerView = footerView as? (any DRxSupplementaryViewProtocol) {
-            if let model = footerModel as? any DRxModelProtocol {
-                configureSupplementaryView(footerView, with: model)
-            }
-            if let view = footerView as? UIView {
-                drxDelegate?.tableView(tableView, didGetFooterView: view, in: section)
-            }
+        if let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: config.identifier) as? (any UIView & DRxSupplementaryViewProtocol) {
+            configureSupplementaryView(footerView, with: footerModel)
+            return footerView
         }
-        
-        return footerView
+        return nil
     }
     
     public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        // 添加安全检查
         guard section < drxDataSource.currentSections.count,
               let headerModel = drxDataSource.currentSections[section].header,
               let config = headerModel.headerConfiguration else {
@@ -526,7 +532,6 @@ extension DRxTableView: UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        // 添加安全检查
         guard section < drxDataSource.currentSections.count,
               let footerModel = drxDataSource.currentSections[section].footer,
               let config = footerModel.footerConfiguration else {
@@ -541,7 +546,7 @@ extension DRxTableView: UITableViewDelegate {
         }
     }
     
-    // 添加预估高度的处理
+    // 添加预高度的处理
     public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let model = model(at: indexPath) else {
             return 44
@@ -565,7 +570,7 @@ extension DRxTableView: UITableViewDelegate {
 
 // MARK: - Rx Extensions
 extension Reactive where Base: DRxTableView {
-    /// 事件序列
+    /// 事件列
     public var events: Observable<DRxTableViewEvent> {
         return base.eventRelay.asObservable()
     }
@@ -598,15 +603,13 @@ extension DRxTableView: DRxModelDelegate {
                 let indexPath = IndexPath(row: rowIndex, section: sectionIndex)
 
                 if model.cellConfiguration.automaticHeight {
-                    // 自动高度模式（如 NewsTextInputCell）：
-                    // 只需要触发布局更新，不需要重新加载 cell
+                    // 自动高度模式：只需要触发布局新，不需要重新加载 cell
                     UIView.performWithoutAnimation {
                         self.beginUpdates()
                         self.endUpdates()
                     }
                 } else {
-                    // 手动高度模式（如 NewsNestedCell）：
-                    // 需要更新缓存并重新加载 cell
+                    // 手动高度模式：需要更新缓存并重新加载 cell
                     let cacheKey = DRxHeightCache.cacheKey(
                         identifier: model.identifier,
                         width: bounds.width

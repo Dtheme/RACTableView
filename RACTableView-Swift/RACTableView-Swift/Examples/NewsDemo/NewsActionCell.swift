@@ -10,7 +10,7 @@ enum NewsActionEvent {
 }
 
 class NewsActionCell: DRxBaseCell<NewsModel> {
-    
+
     // MARK: - UI Components
     
     private let containerView: UIView = {
@@ -83,34 +83,56 @@ class NewsActionCell: DRxBaseCell<NewsModel> {
         cellDisposeBag = DisposeBag()
         
         // 删除按钮事件
-        deleteButton.rx.tap
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                print("删除按钮点击")
-                guard let self = self,
-                      let model = self.model else {
-                    print("删除按钮点击：model is nil")
-                    return
-                }
-                print("发送删除事件，model identifier: \(model.identifier)")
-                self.eventRelay.accept(.delete(model))
-            })
-            .disposed(by: cellDisposeBag)
+        // deleteButton.rx.tap
+        //     .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+        //     .subscribe(onNext: { [weak self] _ in
+        //         print("删除按钮点击")
+        //         guard let self = self,
+        //               let model = self.model else {
+        //             print("删除按钮点击：model is nil")
+        //             return
+        //         }
+        //         print("发送删除事件，model identifier: \(model.identifier)")
+        //         self.eventRelay.accept(.delete(model))
+        //     })
+        //     .disposed(by: cellDisposeBag)
         
         // 添加按钮事件
-        addButton.rx.tap
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                print("添加按钮点击")
-                guard let self = self,
-                      let model = self.model else {
-                    print("添加按钮点击：model is nil")
-                    return
-                }
-                print("发送添加事件，model identifier: \(model.identifier)")
-                self.eventRelay.accept(.addImage(model))
-            })
-            .disposed(by: cellDisposeBag)
+//        addButton.rx.tap
+//            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] _ in
+//                print("添加按钮点击")
+//                guard let self = self,
+//                      let model = self.model else {
+//                    print("添加按钮点击：model is nil")
+//                    return
+//                }
+//                print("发送添加事件，model identifier: \(model.identifier)")
+//                self.eventRelay.accept(.addImage(model))
+            // })
+            // .disposed(by: cellDisposeBag)
+        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func deleteButtonTapped() {
+        print("删除按钮点击")
+        guard let model = self.model else {
+            print("添加按钮点击：model is nil")
+            return
+        }
+        print("发送添加事件，model identifier: \(model.identifier)")
+        self.eventRelay.accept(.delete(model))
+    }
+    
+    @objc func addButtonTapped() {
+        print("添加按钮点击")
+        guard let model = self.model else {
+            print("添加按钮点击：model is nil")
+            return
+        }
+        print("发送添加事件，model identifier: \(model.identifier)")
+        self.eventRelay.accept(.addImage(model))
     }
     
     override func prepareForReuse() {
@@ -120,8 +142,12 @@ class NewsActionCell: DRxBaseCell<NewsModel> {
     }
     
     override func configure(with model: NewsModel) {
+        self.model = model
         print("\n=== NewsActionCell configure called ===")
         super.configure(with: model)
         print("Configured with model: \(model.identifier)")
+
+        // 重新绑定事件
+        bindData()
     }
 } 

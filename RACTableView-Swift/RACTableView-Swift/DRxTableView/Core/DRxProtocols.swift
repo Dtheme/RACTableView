@@ -39,7 +39,7 @@ public protocol DRxCellProtocol: AnyObject {
     /// Cell的数据模型
     var cellModel: ModelType? { get set }
     
-    /// 用于存储RxSwift订阅的DisposeBag
+    /// 用存储RxSwift订阅的DisposeBag
     var disposeBag: DisposeBag { get }
     
     /// 配置Cell

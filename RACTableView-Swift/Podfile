@@ -12,4 +12,5 @@ target 'RACTableView-Swift' do
   # 图片加载
   pod 'Kingfisher'
   pod 'IQKeyboardManager'
+  pod 'MJRefresh'
 end

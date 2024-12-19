@@ -2,7 +2,7 @@
 //  DRxSupplementaryView.swift
 //  DRxTableView
 //
-//  Created by dzw on 2024/xx/xx.
+//  Created by dzw on 2024/12/18.
 //  Copyright © 2024 dzw. All rights reserved.
 //
 
@@ -108,3 +108,5 @@ open class DRxFooterView<Model: DRxModelProtocol>: DRxSupplementaryView<Model> {
         super.init(coder: coder)
     }
 }
+ 
+

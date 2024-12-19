@@ -75,6 +75,7 @@ public class DRxDataSource: NSObject, UITableViewDataSource {
     /// 更新数据源
     public func updateData(_ sections: [SectionModel]) {
         sectionsRelay.accept(sections)
+        tableView?.reloadData()
         updateEmptyState()
     }
     
@@ -120,7 +121,8 @@ public class DRxDataSource: NSObject, UITableViewDataSource {
         if let tableView = tableView as? DRxTableView {
             tableView.drxDelegate?.tableView(tableView, didGetCell: cell, at: indexPath)
         }
-        
+        // 打印 cell 信息 indexPath 和 identifier 、model中的cell 类名
+        print("✨cell: \(cell), indexPath: \(indexPath.section)-\(indexPath.row), cell identifier: \(identifier), cell class: \(cell.classForCoder)")
         return cell
     }
     
@@ -129,5 +131,40 @@ public class DRxDataSource: NSObject, UITableViewDataSource {
             cell.cellModel = model
             cell.configure(with: model)
         }
+    }
+    
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard section < currentSections.count,
+              let headerModel = currentSections[section].header as? HeaderModel,
+              let config = headerModel.headerConfiguration else {
+            return nil
+        }
+        
+        if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: config.identifier) {
+            headerView.configure(with: headerModel)
+            return headerView
+        }
+        return nil
+    }
+    
+    public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard section < currentSections.count,
+              let footerModel = currentSections[section].footer as? FooterModel,
+              let config = footerModel.footerConfiguration else {
+            return nil
+        }
+        
+        if let footerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: config.identifier) {
+            footerView.configure(with: footerModel)
+            return footerView
+        }
+        return nil
+    }
+}
+
+extension UITableViewHeaderFooterView {
+    func configure(with model: Any) {
+        // 在这里实现通用配置逻辑
+        // 例如：设置标题、背景颜色等
     }
 }

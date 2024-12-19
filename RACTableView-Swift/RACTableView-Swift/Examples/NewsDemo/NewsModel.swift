@@ -118,7 +118,7 @@ class NewsModel: DRxModelProtocol {
     
     // MARK: - Initialization
     
-    init(title: String, content: String, imageURL: String, date: Date, cellType: NewsCellType = .normal, subItems: [NewsSubItem] = [], isExpanded: Bool = false) {
+    init(title: String, content: String, imageURL: String, date: Date, cellType: NewsCellType = .normal, subItems: [NewsSubItem] = [], isExpanded: Bool = false, delegate: DRxModelDelegate? = nil) {
         self.identifier = UUID().uuidString
         self.title = title
         self.content = content
@@ -127,6 +127,7 @@ class NewsModel: DRxModelProtocol {
         self.cellType = cellType
         self.subItems = subItems
         self.isExpanded = BehaviorRelay(value: isExpanded)
+        self.delegate = delegate
 
         // 初始化高度
         let initialHeight: CGFloat
@@ -166,5 +167,9 @@ class NewsModel: DRxModelProtocol {
         } else {
             return 64 // 收起状态固定高度
         }
+    }
+
+    func toggleExpand() {
+        isExpanded.accept(!isExpanded.value)
     }
 } 
