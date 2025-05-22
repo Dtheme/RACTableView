@@ -4,7 +4,7 @@
 
 ---
 
-`RACTableView` 是一个演示项目，提供了一种在 iOS 应用中封装通用 TableView 的解决方案。该方案可以减少冗余代码，提升代码的可维护性，同时提高 TableView 中事件处理的灵活性。目前不支持 CocoaPods。
+`RACTableView` 是一个演示项目，提供了一种在 iOS 应用中封装通用 TableView 的解决方案。该方案可以减少冗余代码，提升代码的可维护性，同时提高 TableView 中事件处理的灵活性。
 
 ## 为什么要使用 RACTableView？
 
