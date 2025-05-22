@@ -145,5 +145,5 @@ b. 在大多数情况下，你无需实现 `Delegate` 和 `DataSource` 方法。
 
 add:
 增加了swift版本：[DRxTableView](https://github.com/Dtheme/RACTableView/RACTableView-Swift)
-swift版本使用，请参考[DRxTableView](https://github.com/Dtheme/RACTableView/RACTableView-Swift/RACTableView-Swift/Examples)
+swift版本使用，请参考[DRxTableView](https://github.com/Dtheme/RACTableView/RACTableView-Swift)
 swift版本并非对oc版本的简单翻译，而是重新设计，使用方式和oc版本有较大差异，高度结合swift语言特性以及rxswift
