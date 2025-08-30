@@ -11,6 +11,15 @@
 #import "YYFPSLabel.h"
 #import "UITableView+FDTemplateLayoutCellDebug.h"
 #import "UITableView+RACTableView.h"
+#import "DzwTestTabCell.h"
+#import "DzwTestTabCell_2.h"
+#import "DzwTestTabCell_3.h"
+#import "DzwTestTabCell_4.h"
+#import "DzwTestSubCell.h"
+#import "DzwTestSectionHeader.h"
+#import "DzwTestSectionFooter.h"
+#import "DzwTestResponsechainCell.h"
+#import "DzwTestCellViewModel.h"
 @interface DzwTestTabVC ()<RACTableViewDelegate>
 @property (nonatomic, strong) DRacTableView *tableView;
 @property (nonatomic, strong) DzwTestTabVM *viewModel;
@@ -20,8 +29,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.viewModel loadData];
-    [self excuteTableviewCommands];
+    [self setupViewModelBindings];
+    [self bindTableViewCommands];
+    
+    // 使用ViewModel的Command来加载数据，而非直接调用
+    [self.viewModel.loadDataCommand execute:nil];
     
     //FPS label
     [self addFPSLabel];
@@ -38,25 +50,33 @@
     RAC(self.tableView, sectionFooterModels) = RACObserve(self.viewModel, sectionFooterModels);
 }
 
-- (void)excuteTableviewCommands{
+#pragma mark - ViewModel Bindings
+- (void)setupViewModelBindings {
     @weakify(self);
-    //点击cell事件
-    self.tableView.didSelectCommand = [[RACCommand alloc]initWithSignalBlock:^RACSignal * _Nonnull(RACThreeTuple<UITableView *, NSIndexPath *, id>* _Nullable input) {
+    
+    // 绑定加载状态
+    [self.viewModel.loadingStateSignal subscribeNext:^(NSNumber *loading) {
         @strongify(self);
-        NSLog(@"%@",input);
-        //点击所在tableview
-        UITableView *tableview = input.first;
-        
-        //点击的indexPath
-        NSIndexPath *indexPath = input.second;
-        
-        //点击所在index的数据源model
-        DzwTestTabModel *md = input.third;
-        
-        NSLog(@"🌗🌗[RACCommand]点击了cell 序列号是：%ld-%ld ,cell文本：%@",indexPath.section,indexPath.row,md.titleString);
-        
-        return [RACSignal empty];
+        if (loading.boolValue) {
+            NSLog(@"📱 [VC] 数据加载中...");
+            // 可以在这里显示loading状态
+        } else {
+            NSLog(@"📱 [VC] 数据加载完成");
+            // 隐藏loading状态
+        }
     }];
+    
+    // 绑定错误处理
+    [self.viewModel.errorSignal subscribeNext:^(NSError *error) {
+        @strongify(self);
+        NSLog(@"❌ [VC] 错误: %@", error.localizedDescription);
+        // 可以在这里显示错误提示
+    }];
+}
+
+- (void)bindTableViewCommands {
+    // 使用ViewModel的Command替代VC中直接创建Command
+    self.tableView.didSelectCommand = self.viewModel.cellDidSelectCommand;
 }
 #pragma mark - test case
 -(void)dzwCell_alphaAction:(NSDictionary *)userinfo{
@@ -69,41 +89,81 @@
     NSLog(@"gama------------- %@",userinfo);
 }
 
-#pragma mark - RACTableViewDelegate
-//获取cell中回调出来的事件
+#pragma mark - RACTableViewDelegate  
+/// 第三轮优化：进一步简化，统一使用配置方法
 - (void)rac_tableView:(UITableView *)tableView cell:(UITableViewCell *)cell cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    // 统一的Cell配置方法，更清晰
+    [self configureCellCommands:cell atIndexPath:indexPath];
+}
+
+/// 统一配置Cell的Commands
+- (void)configureCellCommands:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    @weakify(self);
+    
     if ([cell isKindOfClass:[DzwTestTabCell class]]) {
-        DzwTestTabCell * testCell = (DzwTestTabCell *)cell;
-        //cell上按钮的点击事件
-        testCell.tapCommand = [[RACCommand alloc]initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
-            NSLog(@"🌗🌗[RACCommand]点击了cell上的按钮 序列号是：%ld-%ld",(long)indexPath.section,(long)indexPath.row);
-            return [RACSignal empty];
-        }];
+        [self configureBasicCell:(DzwTestTabCell *)cell atIndexPath:indexPath];
         
-        testCell.tapSubject = [RACSubject subject];
-        [testCell.tapSubject subscribeNext:^(id  _Nullable x) {
-            NSLog(@"🌗🌗[RACSubject]点击了cell上的按钮 序列号是：%ld-%ld",(long)indexPath.section,(long)indexPath.row);
-        }];
+    } else if ([cell isKindOfClass:[DzwTestTabCell_3 class]]) {
+        [self configureFoldableCell:(DzwTestTabCell_3 *)cell atIndexPath:indexPath];
         
-    }else if ([cell isKindOfClass:[DzwTestTabCell_3 class]]){
-        DzwTestTabCell_3 *testcell3 = (DzwTestTabCell_3 *)cell;
-        @weakify(self);
-        testcell3.foldCommand = [[RACCommand alloc]initWithSignalBlock:^RACSignal * _Nonnull(id _Nullable input) {
-            @strongify(self);
-            NSLog(@"🌗🌗展开收起cell的 序列号是：%ld-%ld",(long)indexPath.section,(long)indexPath.row);
-            [self.tableView d_reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationFade];
-//            [self.tableView ];
-            return [RACSignal empty];
-        }];
-    }else if ([cell isKindOfClass:[DzwTestTabCell_4 class]]){
-        DzwTestTabCell_4 *testcell4 = (DzwTestTabCell_4 *)cell;
-        testcell4.textViewChanegdCommand = [[RACCommand alloc]initWithSignalBlock:^RACSignal * _Nonnull(id  _Nullable input) {
-            NSLog(@"textview输入：%@",input);
-            [self.tableView beginUpdates];
-            [self.tableView endUpdates];
-            return [RACSignal empty];
-        }];
+    } else if ([cell isKindOfClass:[DzwTestTabCell_4 class]]) {
+        [self configureTextInputCell:(DzwTestTabCell_4 *)cell atIndexPath:indexPath];
     }
+}
+
+/// 配置基础Cell
+- (void)configureBasicCell:(DzwTestTabCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    @weakify(self);
+    
+    // Cell已经有自己的CellViewModel处理业务逻辑，这里只需要简单的事件传递
+    cell.tapCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        @strongify(self);
+        // 可选：向主ViewModel通知Cell按钮被点击
+        return [self.viewModel.cellButtonTapCommand execute:RACTuplePack(indexPath, input)];
+    }];
+    
+    cell.tapSubject = [RACSubject subject];
+    [cell.tapSubject subscribeNext:^(id x) {
+        @strongify(self);
+        [self.viewModel.cellButtonTapCommand execute:RACTuplePack(indexPath, x)];
+    }];
+}
+
+/// 配置可折叠Cell
+- (void)configureFoldableCell:(DzwTestTabCell_3 *)cell atIndexPath:(NSIndexPath *)indexPath {
+    @weakify(self);
+    
+    // 折叠Cell的业务逻辑已经在其CellViewModel中，这里只处理UI刷新
+    cell.foldCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        @strongify(self);
+        
+        // 主要职责：UI刷新
+        [self.tableView d_reloadRowAtIndexPath:indexPath withRowAnimation:UITableViewRowAnimationFade];
+        
+        // 可选：通知主ViewModel
+        [self.viewModel.cellFoldCommand execute:RACTuplePack(indexPath, input)];
+        
+        return [RACSignal empty];
+    }];
+}
+
+/// 配置文本输入Cell  
+- (void)configureTextInputCell:(DzwTestTabCell_4 *)cell atIndexPath:(NSIndexPath *)indexPath {
+    @weakify(self);
+    
+    cell.textViewChanegdCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        @strongify(self);
+        
+        // 主要职责：UI高度调整
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
+        
+        // 可选：通知主ViewModel处理文本变化
+        [self.viewModel.textViewChangedCommand execute:input];
+        
+        return [RACSignal empty];
+    }];
 }
 
 #pragma mark - getter & setter

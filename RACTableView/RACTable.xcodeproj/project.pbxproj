@@ -51,6 +51,7 @@
 		7809C46B2AA87152008316D1 /* UIViewController+Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 7809C4672AA87152008316D1 /* UIViewController+Event.m */; };
 		7809C46F2AA8743C008316D1 /* DzwTestResponsechainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7809C46D2AA8743B008316D1 /* DzwTestResponsechainCell.m */; };
 		7809C4702AA8743C008316D1 /* DzwTestResponsechainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7809C46E2AA8743B008316D1 /* DzwTestResponsechainCell.xib */; };
+		78B2A6972E61FCA700929455 /* DzwTestCellViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B2A6962E61FCA700929455 /* DzwTestCellViewModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +159,8 @@
 		7809C46C2AA8743B008316D1 /* DzwTestResponsechainCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DzwTestResponsechainCell.h; sourceTree = "<group>"; };
 		7809C46D2AA8743B008316D1 /* DzwTestResponsechainCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DzwTestResponsechainCell.m; sourceTree = "<group>"; };
 		7809C46E2AA8743B008316D1 /* DzwTestResponsechainCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DzwTestResponsechainCell.xib; sourceTree = "<group>"; };
+		78B2A6952E61FCA700929455 /* DzwTestCellViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DzwTestCellViewModel.h; sourceTree = "<group>"; };
+		78B2A6962E61FCA700929455 /* DzwTestCellViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DzwTestCellViewModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -393,6 +396,8 @@
 		7878C03228F94E2900673E95 /* VM */ = {
 			isa = PBXGroup;
 			children = (
+				78B2A6952E61FCA700929455 /* DzwTestCellViewModel.h */,
+				78B2A6962E61FCA700929455 /* DzwTestCellViewModel.m */,
 				040DFC0B269BF1DD00E22CD2 /* DzwTestTabVM.h */,
 				040DFC21269BF1DD00E22CD2 /* DzwTestTabVM.m */,
 			);
@@ -548,9 +553,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RACTable/Pods-RACTable-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-RACTable/Pods-RACTable-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -596,6 +605,7 @@
 				040DFC36269BF1DD00E22CD2 /* DzwTestTabVC.m in Sources */,
 				040DFBAE269BEC6600E22CD2 /* ViewController.m in Sources */,
 				780361E32A946A150068F69E /* UIResponder+DResponderRouter.m in Sources */,
+				78B2A6972E61FCA700929455 /* DzwTestCellViewModel.m in Sources */,
 				7809C46A2AA87152008316D1 /* UIResponder+Router.m in Sources */,
 				040DFC2B269BF1DD00E22CD2 /* DzwTestTabCell_2.m in Sources */,
 				040DFBA8269BEC6600E22CD2 /* AppDelegate.m in Sources */,

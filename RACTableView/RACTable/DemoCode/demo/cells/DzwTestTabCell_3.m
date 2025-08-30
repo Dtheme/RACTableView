@@ -10,6 +10,7 @@
 #import "DzwTestTabModel2.h"
 #import "DzwTestTabModel.h"
 #import "DzwTestSubCell.h"
+#import "DzwTestCellViewModel.h"
 
 @interface DzwTestTabCell_3()<UITableViewDelegate>
 @property (nonatomic, strong) UIButton *topButton;
@@ -45,32 +46,62 @@
 //}
 - (void)bindingCellData{
     @weakify(self);
-    [[RACObserve(self, cellModel) skip:1]subscribeNext:^(DzwTestTabModel2 * _Nullable model) {
+    
+    // ✅ 当cellModel变化时，创建对应的CellViewModel
+    [[RACObserve(self, cellModel) skip:1] subscribeNext:^(DzwTestTabModel2 * _Nullable model) {
         @strongify(self);
+        
+        // 创建CellViewModel来处理业务逻辑
+        self.cellViewModel = [[DzwTestCellViewModel alloc] initWithCellModel:model];
+        
+        // 设置数据源
         self.subTable_dataSource = [NSArray arrayWithArray:model.subCellData];
-        [self.topButton setTitle:[NSString stringWithFormat:@"cell内嵌tableview:%@",self.cellModel.isfold?@"收起":@"展开"] forState:UIControlStateNormal];
         [self.tableView reloadData];
+        
+        // 绑定折叠状态到UI
+        [self bindFoldState];
+        [self bindHeightChanges];
     }];
+    
     // 给tableview的models绑定一个监听信号
     RAC(self.tableView,models) = RACObserve(self, subTable_dataSource);
 }
 
+/// 绑定折叠状态变化到UI显示
+- (void)bindFoldState {
+    @weakify(self);
+    [self.cellViewModel.foldStateSignal subscribeNext:^(NSNumber *isFolded) {
+        @strongify(self);
+        NSString *title = [NSString stringWithFormat:@"cell内嵌tableview:%@", 
+                          isFolded.boolValue ? @"收起" : @"展开"];
+        [self.topButton setTitle:title forState:UIControlStateNormal];
+    }];
+}
+
+/// 绑定高度变化
+- (void)bindHeightChanges {
+    @weakify(self);
+    [self.cellViewModel.heightChangedSignal subscribeNext:^(NSNumber *height) {
+        @strongify(self);
+        // 高度变化时可能需要通知外层刷新
+        NSLog(@"📱 [Cell] 高度变化为: %.2f", height.floatValue);
+    }];
+}
+
 - (void)foldAndExpandAction:(UIButton *)sender{
-    self.cellModel.isfold = !self.cellModel.isfold;
-    CGFloat cellHeight = 0;
-    for (DzwTestTabModel *md in self.subTable_dataSource) {
-        md.isfold = !md.isfold;
-        cellHeight += [md.cellHeight floatValue];
-    }
-    if (self.cellModel.isfold) {
-        self.cellModel.cellHeight = @(kScale_W(54));
-    }else{
-        self.cellModel.cellHeight = @(cellHeight+kScale_W(44));
-    }
-    //回调点击事件
-    if (self.foldCommand) {
-        [self.foldCommand execute:@(self.cellModel.isfold)];
-    }
+    @weakify(self);
+    
+    // ✅ 重构后：只负责调用CellViewModel的Command，不处理业务逻辑
+    [[self.cellViewModel.toggleFoldCommand execute:nil] subscribeNext:^(NSNumber *isFolded) {
+        @strongify(self);
+        
+        // 向上传递折叠事件（如果外层需要知道）
+        if (self.foldCommand) {
+            [self.foldCommand execute:isFolded];
+        }
+        
+        NSLog(@"📱 [Cell] 折叠状态已更新为: %@", isFolded.boolValue ? @"折叠" : @"展开");
+    }];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
